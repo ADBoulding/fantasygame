@@ -8,6 +8,16 @@
   <sprites name="sprites"/>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <fonts name="fonts">
+    <font>fonts\fnt_main</font>
+  </fonts>
+  <objects name="objects">
+    <object>objects\obj_text</object>
+    <object>objects\obj_console</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\room0</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
