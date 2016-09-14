@@ -7,7 +7,7 @@ if (command != "")
 { 
     if (command = "start") and (global.location = "ButtFuck")
     {
-        scr_runRoom();
+        locationChange();
     } 
     else if (string_pos("go", command) != 0)
     {
@@ -42,7 +42,11 @@ if (command != "")
         obj_console.console += " You are currently in the " + global.lSuff + " of " + 
             global.location + " in the region of " + global.region + "#";
         obj_console.console += " You were previously in " + global.lPrevious + 
-            " in the region of " + global.region + "#";
+            " in the region of " + global.rPrevious + "#";
+        if (global.location = "introville")
+        { 
+            obj_console.console += "There is a shop";
+        }
     }
 }
     

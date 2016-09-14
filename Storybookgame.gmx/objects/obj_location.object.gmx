@@ -25,21 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize everything
-
-/// location junk
-global.region = "nowhere";
-global.location = "ButtFuck";
-global.lSuff = "Streets";
-global.rPrevious = "Glory Lane";
-global.lPrevious = "your parent's place";
-
-/// Character Name
-global.name = "unknown";
-
-/// progress
-global.progress = "0";
-
+            <string>///This handles all the code and text from a location file
+isShop = true;
 </string>
           </argument>
         </arguments>

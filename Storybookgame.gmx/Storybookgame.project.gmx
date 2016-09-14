@@ -21,6 +21,7 @@
     <object>objects\obj_text</object>
     <object>objects\obj_console</object>
     <object>objects\obj_controller</object>
+    <object>objects\obj_location</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
