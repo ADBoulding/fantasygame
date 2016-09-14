@@ -8,12 +8,19 @@
   <sprites name="sprites"/>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_commands.gml</script>
+    <script>scripts\scr_runRoom.gml</script>
+    <script>scripts\scr_after.gml</script>
+    <script>scripts\locationChange.gml</script>
+  </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_text</object>
     <object>objects\obj_console</object>
+    <object>objects\obj_controller</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

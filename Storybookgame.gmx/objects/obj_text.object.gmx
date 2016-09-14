@@ -130,18 +130,22 @@ if !keyboard_check(vk_control)
     switch(keyboard_key)
     {
         case(vk_backspace):
-            text = string_copy(text, 0, string_length(text) -1);
+            if text != " "
+            {
+                text = string_copy(text, 0, string_length(text) -1);
+            }
             break;
         case(vk_enter):
             if text != " "
-                {
-                    command = text;
-                    text = " ";
-                    with (obj_console)
-                        {
-                            console += other.command + "#";
-                        }
-                }
+            {
+                command = string_delete(text, 1, 1);
+                text = " ";
+                with (obj_console)
+                    {
+                        console += other.command + "#";
+                    }
+                scr_commands(command);
+            }
             break;
         default:
             break;
