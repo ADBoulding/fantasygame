@@ -19,7 +19,7 @@ if (command != "")
                     obj_console.console += "You're already in the shop...#";
                     break;
                 default: 
-                    obj_console.console += "It works (shop)#";
+                    obj_console.console += "Inside there is an old man behind the counter.#";
                     global.lSuff = "shop";
                     break;
             }
@@ -39,16 +39,31 @@ if (command != "")
         }
     } else if (string_pos("print", command) != 0)
     {
-        obj_console.console += " You are currently in the " + global.lSuff + " of " + 
+        obj_console.console += "You are currently in the " + global.lSuff + " of " + 
             global.location + " in the region of " + global.region + "#";
-        obj_console.console += " You were previously in " + global.lPrevious + 
+        obj_console.console += "You were previously in " + global.lPrevious + 
             " in the region of " + global.rPrevious + "#";
-        if (global.location = "introville")
+        if (global.location = "Introville")
         { 
-            obj_console.console += "There is a shop";
+            obj_console.console += "There is a shop and an old man#";
         }
     }
+    else if (string_pos("talk", command) != 0)
+    {
+        if (string_pos("old", command) > string_pos("talk", command) and (global.lSuff = "shop"))
+        {
+            switch global.lSuff
+            {
+                case "old":
+                    obj_console.console += "You're already in the shop...#";
+                    break;
+                default: 
+                    obj_console.console += '"Hello there"#';
+                    global.lSuff = "old";
+                    break;
+            }
+        } 
 }
     
 
-
+}
