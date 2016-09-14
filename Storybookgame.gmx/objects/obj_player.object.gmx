@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,17 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///This handles all the code and text from a location file
-ini_open(working_directory + "\assets\location\" + string_lower(global.location) + ".ini");
-townName = ini_read_string("regionValues", "townname", "noread");
-isShop = ini_read_string("regionValues", "isshop", false);
-ini_close();
-
-localValues = ds_map_create();
-ds_map_add(localValues, "townName", townName);
-ds_map_add(localValues, "isShop", isShop);
-ds_map_add(localValues, "progress", 0);
-
+            <string>///Player variables
 
 </string>
           </argument>

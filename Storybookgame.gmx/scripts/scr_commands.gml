@@ -24,7 +24,7 @@ if (command != "")
                     break;
             }
         } 
-        else if (string_pos("town square", command) > string_pos("go", command))
+        else if (string_pos("town square", command) > string_pos("go", command)) 
         {
             switch global.lSuff
             {
@@ -47,6 +47,15 @@ if (command != "")
         { 
             obj_console.console += "There is a shop and an old man#";
         }
+        if (!ds_map_empty(obj_location.localValues))
+        {
+            obj_console.console += "Town Name: " + obj_location.localValues[? "townName"] + "#";
+            obj_console.console += "Shop exists: " + obj_location.localValues[? "isShop"] + "#";
+        }
+    } else if (command = "check")
+    {    
+        show_message(string(working_directory + "\assets\location\" + string_lower(global.location) + ".ini"));
+        show_message(string(file_exists(working_directory + "\assets\location\" + string_lower(global.location) + ".ini")));
     }
     else if (string_pos("talk", command) != 0)
     {

@@ -8,6 +8,7 @@ if (instance_exists(obj_location))
 {
     with (obj_location)
     {
+        ds_map_destroy(localVariables);
         instance_destroy();
     }
 }
