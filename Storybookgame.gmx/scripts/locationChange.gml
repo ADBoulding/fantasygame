@@ -1,17 +1,14 @@
-///scr_lChange()
+///scr_lChange(location)
 ///Changes the location your player is in
 global.lPrevious = global.location;
-global.location = "Introville";
-global.lStuff = "main";
+global.location = argument0;
 
 if (instance_exists(obj_location))
 {
     with (obj_location)
     {
-        ds_map_destroy(localVariables);
         instance_destroy();
     }
 }
 instance_create(1, 1, obj_location);
-scr_runRoom();
 

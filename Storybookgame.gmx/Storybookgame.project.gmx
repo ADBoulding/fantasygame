@@ -3,30 +3,13 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="2" name="datafiles">
-    <datafiles number="2" name="assets">
-      <datafiles number="2" name="location">
+  <datafiles number="3" name="datafiles">
+    <datafiles number="3" name="assets">
+      <datafiles number="3" name="location">
         <datafile>
-          <name>introville.ini</name>
+          <name>introburg.ini</name>
           <exists>-1</exists>
-          <size>752</size>
-          <exportAction>2</exportAction>
-          <exportDir></exportDir>
-          <overwrite>0</overwrite>
-          <freeData>-1</freeData>
-          <removeEnd>0</removeEnd>
-          <store>0</store>
-          <ConfigOptions>
-            <Config name="Default">
-              <CopyToMask>123146089894126</CopyToMask>
-            </Config>
-          </ConfigOptions>
-          <filename>introville.ini</filename>
-        </datafile>
-        <datafile>
-          <name>buttfuck.ini</name>
-          <exists>-1</exists>
-          <size>752</size>
+          <size>151</size>
           <exportAction>2</exportAction>
           <exportDir></exportDir>
           <overwrite>0</overwrite>
@@ -38,7 +21,7 @@
               <CopyToMask>9223372036854775807</CopyToMask>
             </Config>
           </ConfigOptions>
-          <filename>buttfuck.ini</filename>
+          <filename>introburg.ini</filename>
         </datafile>
       </datafiles>
     </datafiles>
@@ -53,6 +36,10 @@
     <script>scripts\scr_runRoom.gml</script>
     <script>scripts\scr_after.gml</script>
     <script>scripts\locationChange.gml</script>
+    <script>scripts\scr_save_1d_array.gml</script>
+    <script>scripts\scr_go.gml</script>
+    <script>scripts\scr_changeSuff.gml</script>
+    <script>scripts\scr_lookAround.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>

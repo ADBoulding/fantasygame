@@ -26,9 +26,50 @@
           <argument>
             <kind>1</kind>
             <string>///This handles all the code and text from a location file
+
 ini_open(working_directory + "\assets\location\" + string_lower(global.location) + ".ini");
 townName = ini_read_string("regionValues", "townname", "noread");
 isShop = ini_read_string("regionValues", "isshop", false);
+
+//Creates a map of the local and checks if there are arrays
+global.locale = ds_map_create();
+global.localeDest = ds_list_create();
+global.goDest = ds_list_create();
+localPlacesNum = ini_read_real("localPlaces","localPlacesNum", -1);
+if (localPlacesNum != -1)
+{  
+    localArray[localPlacesNum] = undefined;
+}
+//If there are arrays in "localPlaces" it will take the number and run a loop through
+for (var i = 0; i &lt; (localPlacesNum + 1); i++)
+{
+    localArray[i] = ini_read_string("localPlaces", "localPlaces" + string(i) , "");
+    if (ini_section_exists(localArray[i]))
+    {
+        ds_list_add(global.localeDest, localArray[i]); 
+        ///show_message(string(localArray[i]) + " section_exists");
+        ///show_message(string(global.location + localArray[i]));
+        if (ini_key_exists(localArray[i], localArray[i] + "Str"))
+        {
+        ///    show_message("Str Key exists");
+            var descriptionT = ini_read_string(localArray[i], localArray[i] + "Str", undefined);
+            ds_map_add(global.locale, string_lower(localArray[i]) + ".description", descriptionT);
+            ///show_message(string(localArray[i]) + ".description");
+        } else {
+            show_message("Str Key does not exist");
+        }
+        if (ini_key_exists(localArray[i], "canAccess"))
+        {
+            ///show_message("Num Key exists");
+            var canAccessT = ini_read_string(localArray[i], "canAccess", undefined);
+            ds_map_add(global.locale, string_lower(localArray[i]) + ".canAccess", canAccessT);
+        } else {
+            show_message("Num Key does not exist");
+        }    
+    }
+}    
+
+    
 ini_close();
 
 localValues = ds_map_create();
@@ -36,6 +77,41 @@ ds_map_add(localValues, "townName", townName);
 ds_map_add(localValues, "isShop", isShop);
 ds_map_add(localValues, "progress", 0);
 
+if (global.started == false)
+{
+    scr_changeSuff("Gate");
+    global.started = true;
+}
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Destroys data structures
+ds_map_destroy(localVariables);
+ds_map_destroy(locale);
+ds_list_destroy(localeDest);
 
 </string>
           </argument>

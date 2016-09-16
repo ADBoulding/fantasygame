@@ -26,7 +26,27 @@
           <argument>
             <kind>1</kind>
             <string>/// Console variables
-console = "";
+console = '         
+                        +--------------------------------------------------------------------------+
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                   
+                                                                                                   
+                                                   ^(-.-)&gt; Super game stuff                        
+                                                                                                   
+                                                    Adam is the bomb bitches                           
+                                                                                                  
+                                                                                                   
+                                                                                                   
+                                                                                                  
+                        +--------------------------------------------------------------------------+
+
+
+
+
+
+Please type "start" to proceed with the testing...#';
 draw_set_font(fnt_main);
 
 
@@ -52,8 +72,10 @@ draw_set_font(fnt_main);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_roundrect(x-10, 64, x+910, y, true);
-draw_text_ext(x, y-10 -string_height(console), console, 32, 900);
+            <string>var yy = string_height_ext(console, -1, 900);
+draw_roundrect(x-10, 64, x+910, y, true);
+draw_text_ext(x, y - 10 - yy, console, -1, 900);
+
 </string>
           </argument>
         </arguments>

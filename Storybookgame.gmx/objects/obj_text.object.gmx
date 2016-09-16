@@ -28,7 +28,7 @@
             <string>///Initialize the text box
 text = " ";
 command = "";
-enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890 ',.?";
+enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890,./&lt;&gt;?;':[]-=`~";
 draw_set_font(fnt_main);
 blink = false;
 blinkSpeed = 15;
