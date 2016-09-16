@@ -35,6 +35,7 @@ isShop = ini_read_string("regionValues", "isshop", false);
 global.locale = ds_map_create();
 global.localeDest = ds_list_create();
 global.goDest = ds_list_create();
+global.localeNPC = ds_list_create();
 localPlacesNum = ini_read_real("localPlaces","localPlacesNum", -1);
 if (localPlacesNum != -1)
 {  
@@ -46,18 +47,17 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
     localArray[i] = ini_read_string("localPlaces", "localPlaces" + string(i) , "");
     if (ini_section_exists(localArray[i]))
     {
-        ds_list_add(global.localeDest, localArray[i]); 
-        ///show_message(string(localArray[i]) + " section_exists");
-        ///show_message(string(global.location + localArray[i]));
+        ds_list_add(global.localeDest, localArray[i]);
+        
+        ///Checks if there is a string file attatched (description)
         if (ini_key_exists(localArray[i], localArray[i] + "Str"))
         {
-        ///    show_message("Str Key exists");
             var descriptionT = ini_read_string(localArray[i], localArray[i] + "Str", undefined);
             ds_map_add(global.locale, string_lower(localArray[i]) + ".description", descriptionT);
-            ///show_message(string(localArray[i]) + ".description");
         } else {
             show_message("Str Key does not exist");
         }
+        ///Checks the areas the location can access
         if (ini_key_exists(localArray[i], "canAccess"))
         {
             ///show_message("Num Key exists");
@@ -65,7 +65,25 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
             ds_map_add(global.locale, string_lower(localArray[i]) + ".canAccess", canAccessT);
         } else {
             show_message("Num Key does not exist");
-        }    
+        } 
+        
+        if (ini_key_exists(localArray[i], "isShop"))
+        {
+            ///show_message(ini_read_real(localArray[i], "isShop", -1));
+            if (ini_read_real(localArray[i], "isShop", -1) = 1)
+            {
+                ds_map_add(global.locale, string_lower(localArray[i]) + ".isShop", true);
+            }
+        }
+        
+        if (ini_key_exists(localArray[i], "isNPC"))
+        {
+            if (ini_read_real(localArray[i], "isNPC", 0) != 0)
+            {
+                var npcList = ini_read_string(localArray[i], localArray[i] + "NPC", "");
+                ds_map_add(global.locale, string_lower(localArray[i]) + ".NPC", npcList);
+            }
+        }
     }
 }    
 
@@ -82,6 +100,7 @@ if (global.started == false)
     scr_changeSuff("Gate");
     global.started = true;
 }
+
 
 
 

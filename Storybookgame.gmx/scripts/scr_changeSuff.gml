@@ -1,12 +1,19 @@
 ///scr_changeSuff(destination)
+
 if ds_exists(global.goDest, ds_type_list)
 {
     ds_list_destroy(global.goDest);
     global.goDest = ds_list_create();
 }
+if ds_exists(global.localeNPC, ds_type_list)
+{
+    ds_list_destroy(global.localeNPC);
+    global.localeNPC = ds_list_create();
+}
 global.lSuff = argument0;
 var suff = string_lower(global.lSuff);
 var canGo = global.locale[? string(suff + ".canAccess")];
+
 
 obj_console.console += "+-----------------------------------------------------------+#";
 var sen;
@@ -42,6 +49,25 @@ if (canGo != "")
         str = string_delete(str, 1, pos + len);
         ds_list_add(global.goDest, arr);
         arr = 0;
+    }
+}
+if (global.locale[? string(suff + ".NPC")] != undefined)
+{
+    var isNPC = global.locale[? string(suff + ".NPC")];
+    if (isNPC != "")
+    {
+        var arr2;
+        var del2 = ",";
+        var str2 = isNPC + del2;
+        var len2 = string_length(del2);
+        var ind2 = 0;
+        repeat (string_count(del2, str2)) {
+            var pos2 = string_pos(del2, str2) - 1;
+            arr2 = string_copy(str2, 1, pos2);
+            str2 = string_delete(str2, 1, pos2 + len2);
+            ds_list_add(global.localeNPC, arr2);
+            arr2 = 0;
+        }
     }
 }
 
