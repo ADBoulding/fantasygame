@@ -32,14 +32,17 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scr_commands.gml</script>
-    <script>scripts\scr_runRoom.gml</script>
-    <script>scripts\scr_after.gml</script>
-    <script>scripts\locationChange.gml</script>
     <script>scripts\scr_save_1d_array.gml</script>
-    <script>scripts\scr_go.gml</script>
-    <script>scripts\scr_changeSuff.gml</script>
-    <script>scripts\scr_lookAround.gml</script>
+    <scripts name="commands">
+      <script>scripts\scr_lookAround.gml</script>
+      <script>scripts\scr_go.gml</script>
+      <script>scripts\scr_commands.gml</script>
+    </scripts>
+    <scripts name="change scene">
+      <script>scripts\locationChange.gml</script>
+      <script>scripts\scr_changeSuff.gml</script>
+      <script>scripts\scr_runRoom.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
