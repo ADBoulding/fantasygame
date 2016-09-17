@@ -1,21 +1,23 @@
 ///scr_changeSuff(destination)
 
-if ds_exists(global.goDest, ds_type_list)
+if ds_exists(global.goDest, ds_type_list) ///checks if there is a list holding desitinations in the current suffix and replaces it
 {
     ds_list_destroy(global.goDest);
     global.goDest = ds_list_create();
 }
-if ds_exists(global.localeNPC, ds_type_list)
+
+if ds_exists(global.localeNPC, ds_type_list) /// ditto with the npc list
 {
     ds_list_destroy(global.localeNPC);
     global.localeNPC = ds_list_create();
 }
+
 global.lSuff = argument0;
 var suff = string_lower(global.lSuff);
 var canGo = global.locale[? string(suff + ".canAccess")];
 
-
 obj_console.console += "+-----------------------------------------------------------+#";
+obj_console.console += ds_map_find_value(global.locale, string_lower(global.lSuff) + ".description") + "#";
 var sen;
 switch suff
 {
@@ -69,5 +71,6 @@ if (global.locale[? string(suff + ".NPC")] != undefined)
             arr2 = 0;
         }
     }
+    scr_npc();
 }
 

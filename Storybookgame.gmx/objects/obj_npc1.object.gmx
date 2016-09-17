@@ -25,30 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize everything
-window_set_fullscreen(true);
-global.started = false;
-
-
-/// location junk
-global.region = "nowhere";
-global.location = "ButtFuck";
-global.lSuff = "Streets";
-global.rPrevious = "Glory Lane";
-global.lPrevious = "your parent's place";
-
-/// Character Name
-global.name = "unknown";
-
-/// progress
-global.progress = "0";
-
-///Command or response
-waitForResponse = false;
-response = "";
-responseArg = "";
-
-
+            <string>///Initialtes the npc character
 </string>
           </argument>
         </arguments>

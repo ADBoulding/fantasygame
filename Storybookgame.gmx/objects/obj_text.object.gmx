@@ -34,6 +34,10 @@ blink = false;
 blinkSpeed = 15;
 alarm[0] = blinkSpeed;
 
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -83,14 +87,14 @@ alarm[0] = blinkSpeed;
           <argument>
             <kind>1</kind>
             <string>///draw the text
-draw_roundrect(x-10, y-20, x+910, y+string_height(text)+20, true);
-draw_text_ext(x, y, text, 32, 900);
+draw_roundrect(64, y-20, room_width - 64, y+string_height(text)+20, true);
+draw_text_ext(70, y, text, 32, (room_width-64)-70);
 if blink
 {
     var length = string_width(text);
     var height = string_height(text);
     
-    draw_line(x + length, y, x + length, y + height);
+    draw_line(70 + length, y, 70 + length, y + height);
 }
 
 
@@ -118,7 +122,7 @@ if blink
           <argument>
             <kind>1</kind>
             <string>///Getting the key input
-if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboard_key)) == 1) and (string_length(text) &lt;900)
+if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboard_key)) == 1) and (string_length(text) &lt;(room_width - 134))
 {
     blink = true;
     alarm[0] = blinkSpeed;
@@ -144,7 +148,12 @@ if !keyboard_check(vk_control)
                     {
                         console += other.command + "#";
                     }
-                scr_commands(command);
+                if (obj_controller.waitForResponse != true)
+                {
+                    scr_commands(command);
+                } else {
+                    scr_response(command, obj_controller.responseArg);
+                }
             }
             break;
         default:

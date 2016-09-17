@@ -27,27 +27,34 @@
             <kind>1</kind>
             <string>/// Console variables
 console = '         
-                        +--------------------------------------------------------------------------+
+                                                                                         +--------------------------------------------------------------------------+
                                                                                                   
                                                                                                   
                                                                                                   
                                                                                                    
                                                                                                    
-                                                   ^(-.-)&gt; Super game stuff                        
+                                                                                                                    ^(-.-)&gt; Super game stuff                        
                                                                                                    
-                                                    Adam is the bomb bitches                           
+                                                                                                                     Adam is the bomb bitches                           
                                                                                                   
                                                                                                    
                                                                                                    
                                                                                                   
-                        +--------------------------------------------------------------------------+
+                                                                                          +--------------------------------------------------------------------------+
 
 
 
 
 
-Please type "start" to proceed with the testing...#';
+                        
+                                            
+                        
+                                                                      
+                        
+                        
+                                                                                                    Please type "start" to proceed with the testing...#';
 draw_set_font(fnt_main);
+
 
 
 </string>
@@ -72,9 +79,9 @@ draw_set_font(fnt_main);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var yy = string_height_ext(console, -1, 900);
-draw_roundrect(x-10, 64, x+910, y, true);
-draw_text_ext(x, y - 10 - yy, console, -1, 900);
+            <string>var yy = string_height_ext(console, -1, (room_width - 75)-64);
+draw_roundrect(64, 64, room_width - 64, y, true);
+draw_text_ext(75, y - 10 - yy, console, -1, (room_width - 75)-64);
 
 </string>
           </argument>
