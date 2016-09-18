@@ -79,6 +79,7 @@
       <object>objects\obj_npc1</object>
       <object>objects\obj_npc2</object>
     </objects>
+    <object>objects\obj_shop</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>

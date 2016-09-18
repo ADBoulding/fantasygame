@@ -1,30 +1,27 @@
 ///scr_go(command)
 
-command = argument0;
-var attempt = 0;
-var listSize = ds_list_size(global.goDest);
-
-if (string_pos(string_lower(global.lSuff), command) > string_pos("go", command))
+var locale = argument0;
+if locale = global.lSuff
 {
     obj_console.console += "You're already in the " + global.lSuff + "#";
     exit;
 }
 
-for (var i = 0; i < listSize; i++;)
+var exists = ds_list_find_index(global.goDest, locale);
+if exists != -1
 {
-    var dest = string_lower(global.goDest[| i]);
-    ///show_message(global.goDest[| i]);
-    if (string_pos(dest, command) > string_pos("go", command))
-    {
-        scr_changeSuff(global.goDest[| i]);
-        exit;
-    }
-    attempt += 1;
-}
-if (attempt = listSize)
-{
+    scr_changeSuff(global.goDest[| exists]);
+    exit;
+} else {
     obj_console.console += "You cannot go there from here#";
 }
+
+
+
+
+
+
+
 
 
 

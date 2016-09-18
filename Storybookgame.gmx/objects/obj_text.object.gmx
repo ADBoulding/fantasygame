@@ -27,12 +27,23 @@
             <kind>1</kind>
             <string>///Initialize the text box
 text = " ";
+subject = "";
+cmdText = "";
+placeText = "";
+cmdTrue = false;
+placeTrue = false;
+
 command = "";
 enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890,./&lt;&gt;?;':[]-=`~";
 draw_set_font(fnt_main);
 blink = false;
 blinkSpeed = 15;
 alarm[0] = blinkSpeed;
+
+
+///command list
+ 
+
 
 
 
@@ -96,7 +107,11 @@ if blink
     
     draw_line(70 + length, y, 70 + length, y + height);
 }
-
+draw_text(10,10,subject);
+draw_text(10,35,cmdText);
+draw_text(10,60,string(cmdTrue));
+draw_text(10,85,placeText);
+draw_text(10,110,placeTrue);
 
 
 </string>
@@ -122,21 +137,99 @@ if blink
           <argument>
             <kind>1</kind>
             <string>///Getting the key input
+if (subject = " ")
+{
+    subject = "";
+}
+///handles string addition (adding keys)
 if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboard_key)) == 1) and (string_length(text) &lt;(room_width - 134))
 {
     blink = true;
     alarm[0] = blinkSpeed;
     text += keyboard_lastchar;
-} 
+    subject += keyboard_lastchar;
+}
+/// handles caps
+    if (cmdTrue) and (!placeTrue) and (string_length(subject) = 1) and (subject != " ")
+    {
+        subject = string_upper(subject);
+    }
+    if (cmdTrue) and (!placeTrue) and (string_length(subject) &gt; 1) and (subject != " ")
+    {
+        var spaceL = string_pos(" ", subject);
+        subject = string_replace(subject, string_char_at(subject, spaceL + 1), string_upper(string_char_at(subject, spaceL + 1)));
+        show_message(string(spaceL + 1));
+    }    
 
 if !keyboard_check(vk_control)
 {
     switch(keyboard_key)
     {
+        case(vk_space):
+            if (subject != "") or (subject != " ")
+            {
+                if !cmdTrue or !placeTrue
+                {  
+                    if !cmdTrue
+                    {
+                        var lSize = ds_list_size(global.commandList);
+                        var ltrue = false;
+                        for (i = 0; i &lt; lSize; i++)
+                        {
+                            var cList = ds_list_find_value(global.commandList, i);
+                            if string_pos(string_lower(subject), cList) != 0
+                            {
+                                subject += " ";
+                                ltrue = true;
+                            }
+                        }
+                        if ltrue = false
+                        {   
+                            subject = "";
+                        }
+                    } else if !placeTrue
+                    {
+                        var lSize = ds_list_size(global.goDest);
+                        var ltrue = false;
+                        for (i = 0; i &lt; lSize; i++)
+                        {
+                            var dList = string_lower(ds_list_find_value(global.goDest, i));
+                            if string_pos(string_lower(subject), dList) != 0
+                            {
+                                subject += " "; 
+                                ltrue = true; 
+                            }
+                        }
+                        if ltrue = false
+                        {   
+                            subject = "";
+                        }
+                    }
+                } else {
+                    subject = "";
+                }
+            }
+            text += " ";          
         case(vk_backspace):
             if text != " "
             {
                 text = string_copy(text, 0, string_length(text) -1);
+            }
+            if subject != ""
+            {
+                subject = string_copy(subject, 0, string_length(subject) -1);
+            }
+            if cmdTrue and string_pos(cmdText, text) = 0
+            {
+                subject = string_copy(cmdText, 0, string_length(cmdText) -1);
+                cmdText = "";
+                cmdTrue = false;
+            }
+            if placeTrue and string_pos(string_lower(placeText), text) = 0 
+            {
+                subject = string_copy(placeText, 0, string_length(placeText) -1);
+                placeText = "";
+                placeTrue = false;
             }
             break;
         case(vk_enter):
@@ -150,16 +243,31 @@ if !keyboard_check(vk_control)
                     }
                 if (obj_controller.waitForResponse != true)
                 {
-                    scr_commands(command);
+                    scr_commands(cmdText, placeText);
                 } else {
                     scr_response(command, obj_controller.responseArg);
                 }
             }
+            subject = "";
+            cmdText = "";
+            placeText = "";
+            cmdTrue = false;
+            placeTrue = false;
             break;
         default:
             break;
     }
 }
+if (ds_list_find_index(global.commandList, string_lower(subject)) != -1)
+{
+    cmdText = subject;
+    cmdTrue = true;
+} 
+if ds_list_find_index(global.goDest, subject) != -1
+{
+    placeText = subject;   
+    placeTrue = true;
+} 
 </string>
           </argument>
         </arguments>

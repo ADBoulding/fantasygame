@@ -32,10 +32,6 @@ townName = ini_read_string("regionValues", "townname", "noread");
 isShop = ini_read_string("regionValues", "isshop", false);
 
 //Creates a map of the local and checks if there are arrays
-global.locale = ds_map_create();
-global.localeDest = ds_list_create();
-global.goDest = ds_list_create();
-global.localeNPC = ds_list_create();
 localPlacesNum = ini_read_real("localPlaces","localPlacesNum", -1);
 if (localPlacesNum != -1)
 {  
@@ -63,6 +59,7 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
             ///show_message("Num Key exists");
             var canAccessT = ini_read_string(localArray[i], "canAccess", undefined);
             ds_map_add(global.locale, string_lower(localArray[i]) + ".canAccess", canAccessT);
+            ds_list_add(global.commandList, "go");
         } else {
             show_message("Num Key does not exist");
         } 
@@ -82,6 +79,7 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
             {
                 var npcList = ini_read_string(localArray[i], localArray[i] + "NPC", "");
                 ds_map_add(global.locale, string_lower(localArray[i]) + ".NPC", npcList);
+                ds_list_add(global.commandList, "talk");
             }
         }
     }
