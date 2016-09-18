@@ -154,11 +154,13 @@ if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboa
     {
         subject = string_upper(subject);
     }
-    if (cmdTrue) and (!placeTrue) and (string_length(subject) &gt; 1) and (subject != " ")
+    if (cmdTrue) and (!placeTrue) and (string_length(subject) &gt; 1) and (string_pos(" ", subject) &gt; (string_pos(cmdText, subject)))
     {
         var spaceL = string_pos(" ", subject);
-        subject = string_replace(subject, string_char_at(subject, spaceL + 1), string_upper(string_char_at(subject, spaceL + 1)));
-        show_message(string(spaceL + 1));
+        if spaceL &gt; string_pos(cmdText, subject)
+        {
+            subject = string_replace(subject, string_char_at(subject, spaceL + 1), string_upper(string_char_at(subject, spaceL + 1))); ///Problem
+        }
     }    
 
 if !keyboard_check(vk_control)
@@ -237,10 +239,7 @@ if !keyboard_check(vk_control)
             {
                 command = string_delete(text, 1, 1);
                 text = " ";
-                with (obj_console)
-                    {
-                        console += other.command + "#";
-                    }
+                obj_console.console += command + "#";
                 if (obj_controller.waitForResponse != true)
                 {
                     scr_commands(cmdText, placeText);
