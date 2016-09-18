@@ -74,12 +74,12 @@
     <object>objects\obj_controller</object>
     <object>objects\obj_location</object>
     <object>objects\obj_player</object>
+    <object>objects\obj_shop</object>
     <objects name="npcs">
       <object>objects\obj_npc0</object>
       <object>objects\obj_npc1</object>
       <object>objects\obj_npc2</object>
     </objects>
-    <object>objects\obj_shop</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>

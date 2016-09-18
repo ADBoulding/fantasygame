@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///Initialtes the npc character
+ini_open(working_directory + "\assets\location\" + string_lower(global.location) + "NPC.ini");
 </string>
           </argument>
         </arguments>

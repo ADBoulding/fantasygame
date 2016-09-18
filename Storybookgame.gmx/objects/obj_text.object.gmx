@@ -159,7 +159,7 @@ if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboa
         var spaceL = string_pos(" ", subject);
         if spaceL &gt; string_pos(cmdText, subject)
         {
-            subject = string_replace(subject, string_char_at(subject, spaceL + 1), string_upper(string_char_at(subject, spaceL + 1))); ///Problem
+            subject = string_replace(subject, " "+string_char_at(subject, spaceL + 1), " "+string_upper(string_char_at(subject, spaceL + 1))); ///Problem
         }
     }    
 
