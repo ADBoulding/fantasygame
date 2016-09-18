@@ -3,7 +3,7 @@
 if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
 {
     obj_console.console += "+-----------------------------------------------------------+#";
-    obj_console.console += "You take a look around to see what you can interact with..."
+    obj_console.console += "You take a look around to see what you can interact with...#"
     if !ds_list_empty(global.goDest) //checks if there is stuff to notice
     {
         obj_console.console += "In this area you can access...#"

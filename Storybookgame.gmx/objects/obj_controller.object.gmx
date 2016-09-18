@@ -47,6 +47,7 @@ global.progress = "0";
 waitForResponse = false;
 response = "";
 responseArg = "";
+targetArg = "";
 
 ///global lists and stuff
 global.locale = ds_map_create();

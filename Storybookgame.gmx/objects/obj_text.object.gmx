@@ -29,9 +29,12 @@
 text = " ";
 subject = "";
 cmdText = "";
-placeText = "";
+argText = "";
 cmdTrue = false;
-placeTrue = false;
+argTrue = false;
+npcText = "";
+npcTrue = false;
+whoTalk = 0;
 
 command = "";
 enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890,./&lt;&gt;?;':[]-=`~";
@@ -107,11 +110,14 @@ if blink
     
     draw_line(70 + length, y, 70 + length, y + height);
 }
-draw_text(10,10,subject);
-draw_text(10,35,cmdText);
-draw_text(10,60,string(cmdTrue));
-draw_text(10,85,placeText);
-draw_text(10,110,placeTrue);
+draw_text(5,10,subject);
+draw_text(5,35,cmdText);
+draw_text(5,60,cmdTrue);
+draw_text(5,85,argText);
+draw_text(5,110,argTrue);
+draw_text(5,135,npcText);
+draw_text(5,160,npcTrue);
+draw_text(80,10,global.player1State);
 
 
 </string>
@@ -137,11 +143,23 @@ draw_text(10,110,placeTrue);
           <argument>
             <kind>1</kind>
             <string>///Getting the key input
-if (subject = " ")
+
+///---------------------------------------------------bumps empty subject
+if (subject = " ")                                  //
 {
     subject = "";
 }
-///handles string addition (adding keys)
+if (string_pos("  ", subject) != 0)
+{
+    subject = string_replace(subject, "  "," ");
+}
+if (string_pos("  ", text) != 0)
+{
+    text = string_replace(text, "  "," ");
+}                                                  //
+///---------------------------------------------------end empty subject bump
+
+///----------------------------------------------------handles string addition (adding keys)
 if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboard_key)) == 1) and (string_length(text) &lt;(room_width - 134))
 {
     blink = true;
@@ -149,89 +167,129 @@ if (string_count(chr(keyboard_key), enabled_keys)) and (string_length(chr(keyboa
     text += keyboard_lastchar;
     subject += keyboard_lastchar;
 }
-/// handles caps
-    if (cmdTrue) and (!placeTrue) and (string_length(subject) = 1) and (subject != " ")
-    {
-        subject = string_upper(subject);
-    }
-    if (cmdTrue) and (!placeTrue) and (string_length(subject) &gt; 1) and (string_pos(" ", subject) &gt; (string_pos(cmdText, subject)))
-    {
-        var spaceL = string_pos(" ", subject);
-        if spaceL &gt; string_pos(cmdText, subject)
-        {
-            subject = string_replace(subject, " "+string_char_at(subject, spaceL + 1), " "+string_upper(string_char_at(subject, spaceL + 1))); ///Problem
-        }
-    }    
+///----------------------------------------------------String input end
 
+///----------------------------------------------------handles caps start
+if (cmdTrue) and (string_length(subject) = 1) and (subject != " ")
+{
+    subject = string_upper(subject);
+}
+if (cmdTrue) and (string_length(subject) &gt; 1) and (string_pos(" ", subject) &gt; (string_pos(cmdText, subject)))
+{
+    var spaceL = string_pos(" ", subject);
+    if spaceL &gt; string_pos(cmdText, subject)
+    {
+        subject = string_replace(subject, " "+string_char_at(subject, spaceL + 1), " "+string_upper(string_char_at(subject, spaceL + 1))); ///Problem
+    }
+}    
+///-----------------------------------------------------end handles caps
+
+///-----------------------------------------------------*Switches between different lists*
+switch global.player1State
+{
+    case "normal":
+        var cmdList = global.commandList;
+        var argList = global.goDest;
+        var npcList = global.localeNPC;
+        break;
+    case "talking":
+        var cmdList = obj_npc0.talkList;
+        var argList = obj_npc0.subjects;
+        var npcList = obj_npc0.objects;
+        subject = string_lower(subject);
+        break;
+}
+///------------------------------------------------------end list chage
+
+///------------------------------------------------------The big one (referencing)
 if !keyboard_check(vk_control)
 {
     switch(keyboard_key)
     {
         case(vk_space):
-            if (subject != "") or (subject != " ")
+            if (subject != "") or (subject != " ")                                                          ///checks if the input in empty already
             {
-                if !cmdTrue or !placeTrue
+                if !cmdTrue or !argTrue or !npcTrue                                                         //checks if there is an open input slot
                 {  
+                    var ltrue = false;
                     if !cmdTrue
                     {
-                        var lSize = ds_list_size(global.commandList);
-                        var ltrue = false;
-                        for (i = 0; i &lt; lSize; i++)
+                        var lSize = ds_list_size(cmdList);
+                        for (i = 0; i &lt; lSize; i++)                                                        ///creates a for loop to check if the subject is in a command
                         {
-                            var cList = ds_list_find_value(global.commandList, i);
-                            if string_pos(string_lower(subject), cList) != 0
+                            var cList = ds_list_find_value(cmdList, i); 
+                            if (string_pos(string_lower(subject), cList) != 0) and (subject != " ")
                             {
                                 subject += " ";
-                                ltrue = true;
+                                ltrue = true;                                                               ///if it passes then it will not reset to ""
                             }
                         }
-                        if ltrue = false
-                        {   
-                            subject = "";
-                        }
-                    } else if !placeTrue
+                    } else if !argTrue or !npcTrue                                                          ///does the same with arguments and npcs
                     {
-                        var lSize = ds_list_size(global.goDest);
                         var ltrue = false;
-                        for (i = 0; i &lt; lSize; i++)
-                        {
-                            var dList = string_lower(ds_list_find_value(global.goDest, i));
-                            if string_pos(string_lower(subject), dList) != 0
+                        if !argTrue
+                        {   
+                            var lSize = ds_list_size(argList);
+                            for (i = 0; i &lt; lSize; i++)
                             {
-                                subject += " "; 
-                                ltrue = true; 
+                                var dList = string_lower(ds_list_find_value(argList, i));
+                                if (string_pos(string_lower(subject), dList) != 0) and (subject != " ")
+                                {
+                                    subject += " "; 
+                                    ltrue = true; 
+                                }
                             }
                         }
-                        if ltrue = false
-                        {   
-                            subject = "";
+                        if !npcTrue
+                        {
+                            var lSize = ds_list_size(npcList);
+                            for (i = 0; i &lt; lSize; i++)
+                            {
+                                var nList = (ds_list_find_value(npcList, i));
+                                if (string_pos((subject), nList) != 0) and (subject != " ")
+                                {
+                                    subject += " "; 
+                                    ltrue = true; 
+                                }
+                            }
                         }
-                    }
+                    }       
+                    if (ltrue = false)                                                                  //if nothing passes then subject = ""
+                    {   
+                        subject = "";
+                    }  
                 } else {
                     subject = "";
                 }
             }
-            text += " ";          
+            text += " "; 
+            break;         
         case(vk_backspace):
             if text != " "
             {
-                text = string_copy(text, 0, string_length(text) -1);
+                text = string_copy(text, 0, string_length(text) -1);                                    //if text is not empty, pressing backspace removes the last key
             }
             if subject != ""
             {
-                subject = string_copy(subject, 0, string_length(subject) -1);
+                subject = string_copy(subject, 0, string_length(subject) -1);                           //same for the subject
             }
             if cmdTrue and string_pos(cmdText, text) = 0
             {
-                subject = string_copy(cmdText, 0, string_length(cmdText) -1);
+                subject = string_copy(cmdText, 0, string_length(cmdText) -1);                           //if you press backspace and it removes a command, the command is not the subject
                 cmdText = "";
                 cmdTrue = false;
             }
-            if placeTrue and string_pos(string_lower(placeText), text) = 0 
+            if argTrue and string_pos(string_lower(argText), text) = 0 
             {
-                subject = string_copy(placeText, 0, string_length(placeText) -1);
-                placeText = "";
-                placeTrue = false;
+                subject = string_copy(argText, 0, string_length(argText) -1);                           //^^same with the arugment
+                argText = "";
+                argTrue = false;
+            }
+            if npcTrue and string_pos(string_lower(npcText), text) = 0 
+            {
+               subject = string_copy(npcText, 0, string_length(npcText) -1);                            //^^same with the npc
+                npcText = "";
+                npcTrue = false;
             }
             break;
         case(vk_enter):
@@ -242,31 +300,40 @@ if !keyboard_check(vk_control)
                 obj_console.console += command + "#";
                 if (obj_controller.waitForResponse != true)
                 {
-                    scr_commands(cmdText, placeText);
+                    scr_commands(cmdText, argText, npcText);
                 } else {
-                    scr_response(command, obj_controller.responseArg);
+                    scr_response(command, obj_controller.responseArg, obj_controller.targetArg);
                 }
             }
             subject = "";
             cmdText = "";
-            placeText = "";
+            argText = "";
+            npcText = "";
             cmdTrue = false;
-            placeTrue = false;
+            argTrue = false;
+            npcTrue = false;
             break;
         default:
             break;
     }
 }
-if (ds_list_find_index(global.commandList, string_lower(subject)) != -1)
+if (ds_list_find_index(cmdList, string_lower(subject)) != -1)                       ///actively checks if the subject is a comman
 {
     cmdText = subject;
     cmdTrue = true;
 } 
-if ds_list_find_index(global.goDest, subject) != -1
+if ds_list_find_index(argList, subject) != -1                                 ///actively checks if the subject is an argument
 {
-    placeText = subject;   
-    placeTrue = true;
-} 
+    argText = subject;   
+    argTrue = true;
+}
+if ds_list_find_index(npcList, subject) != -1                              ///actively checks if "subject" is an npc
+{
+   npcText = subject;   
+    npcTrue = true;
+}
+
+    
 </string>
           </argument>
         </arguments>

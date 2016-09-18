@@ -26,7 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>///Player variables
-state = "normal";
+global.player1State = "normal";
+global.talkingTo = -1;
+
+global.progress = ds_map_create();
+global.progress[? "Old ManProgress"] = -1;
+global.progress[? "catProgress"] = -1;
+
 </string>
           </argument>
         </arguments>

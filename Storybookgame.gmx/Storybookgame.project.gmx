@@ -57,6 +57,8 @@
       <script>scripts\scr_commands.gml</script>
       <script>scripts\scr_response.gml</script>
       <script>scripts\scr_exitGame.gml</script>
+      <script>scripts\scr_talk.gml</script>
+      <script>scripts\scr_ask.gml</script>
     </scripts>
     <scripts name="change scene">
       <script>scripts\scr_lChange.gml</script>
