@@ -60,3 +60,7 @@ if (command = "exit game")
 {
     scr_exitGame();
 }
+if (command = "clear")
+{
+    obj_console.console = "";
+}

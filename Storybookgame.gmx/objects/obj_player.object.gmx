@@ -31,7 +31,7 @@ global.talkingTo = -1;
 
 global.progress = ds_map_create();
 global.progress[? "Old ManProgress"] = -1;
-global.progress[? "catProgress"] = -1;
+global.progress[? "CatProgress"] = -1;
 
 </string>
           </argument>

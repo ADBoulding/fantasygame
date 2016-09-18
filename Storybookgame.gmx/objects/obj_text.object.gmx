@@ -118,6 +118,7 @@ draw_text(5,110,argTrue);
 draw_text(5,135,npcText);
 draw_text(5,160,npcTrue);
 draw_text(80,10,global.player1State);
+draw_text(140,10,global.localeNPC[| 0]);
 
 
 </string>
@@ -193,10 +194,20 @@ switch global.player1State
         var npcList = global.localeNPC;
         break;
     case "talking":
-        var cmdList = obj_npc0.talkList;
-        var argList = obj_npc0.subjects;
-        var npcList = obj_npc0.objects;
-        subject = string_lower(subject);
+        switch obj_controller.waitForResponse 
+        {
+            case true:
+                var cmdList = obj_npc0.responseList;
+                var argList = obj_npc0.subjects;
+                var npcList = obj_npc0.objects;
+                break;
+            case false:
+                var cmdList = obj_npc0.talkList;
+                var argList = obj_npc0.subjects;
+                var npcList = obj_npc0.objects;
+                subject = string_lower(subject);
+                break;
+        }
         break;
 }
 ///------------------------------------------------------end list chage
@@ -302,7 +313,7 @@ if !keyboard_check(vk_control)
                 {
                     scr_commands(cmdText, argText, npcText);
                 } else {
-                    scr_response(command, obj_controller.responseArg, obj_controller.targetArg);
+                    scr_response(cmdText, obj_controller.responseArg, obj_controller.targetArg);
                 }
             }
             subject = "";

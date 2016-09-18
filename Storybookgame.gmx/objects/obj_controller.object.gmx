@@ -55,7 +55,7 @@ global.localeDest = ds_list_create();
 global.goDest = ds_list_create();
 global.localeNPC = ds_list_create();
 global.commandList = ds_list_create();
-ds_list_add(global.commandList, "look around","exit game","exists","start");
+ds_list_add(global.commandList, "look around","exit game","exists","start","clear");
 
 
 </string>

@@ -2,7 +2,10 @@
 var command = string_lower(argument0);
 var arg = argument1;
 var target = argument2;
-show_message("running")
+show_message("running");
+show_message(arg);
+show_message(command);
+show_message(string_char_at(arg,string_pos(command+"_",arg)+string_length(command+"_")));
 if target != ""
 {
     switch target
@@ -10,33 +13,21 @@ if target != ""
         case "obj_npc0":
             if (arg != "")
             {
-                switch arg
+                if string_pos(command,arg)
                 {
-                    case "(Y/N)":
-                        switch command
-                        {
-                            case "y":
-                            case "yes":
-                                obj_npc0.topicProgress += 1;
-                                obj_controller.waitForResponse = false;
-                                obj_controller.responseArg = "";     
-                                obj_controller.targetArg = "";  
-                                obj_npc0.bypass = 1;
-                                break;
-                            case "n":
-                            case "no":
-                                obj_npc0.topic = "";
-                                obj_npc0.topicProgress = -1;
-                                obj_npc0.greeted = false;
-                                obj_controller.waitForResponse = false;
-                                obj_controller.responseArg = "";     
-                                obj_controller.targetArg = ""; 
-                                break;
-                            default:
-                                obj_console.console += "That is not a valid command#(Y/N)";
-                                break;
-                        }
+                    var argNum = real(string_char_at(arg,string_pos(command+"_",arg)+string_length(command+"_")));
+                    obj_npc0.argNum = argNum;
+                    obj_npc0.topicProgress += 1;
+                    obj_npc0.bypass = 1;
+                    obj_controller.waitForResponse = false;
+                    obj_controller.response = "";
+                    obj_controller.responseArg = "";
+                    obj_controller.targetArg = "";
+                    exit;
+                } else {
+                    obj_console.console += "That is not a valid response";
                 }
+                
             }
         case "exitGame":
             if (arg != "")
