@@ -35,6 +35,7 @@ argTrue = false;
 npcText = "";
 npcTrue = false;
 whoTalk = 0;
+debug = false;
 
 command = "";
 enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890,./&lt;&gt;?;':[]-=`~";
@@ -110,15 +111,18 @@ if blink
     
     draw_line(70 + length, y, 70 + length, y + height);
 }
-draw_text(5,10,subject);
-draw_text(5,35,cmdText);
-draw_text(5,60,cmdTrue);
-draw_text(5,85,argText);
-draw_text(5,110,argTrue);
-draw_text(5,135,npcText);
-draw_text(5,160,npcTrue);
-draw_text(80,10,global.player1State);
-draw_text(140,10,global.localeNPC[| 0]);
+if debug == true
+{
+    draw_text(5,10,subject);
+    draw_text(5,35,cmdText);
+    draw_text(5,60,cmdTrue);
+    draw_text(5,85,argText);
+    draw_text(5,110,argTrue);
+    draw_text(5,135,npcText);
+    draw_text(5,160,npcTrue);
+    draw_text(80,10,global.player1State);
+    draw_text(180,10,global.localeNPC[| 0]);
+}
 
 
 </string>
@@ -313,7 +317,7 @@ if !keyboard_check(vk_control)
                 {
                     scr_commands(cmdText, argText, npcText);
                 } else {
-                    scr_response(cmdText, obj_controller.responseArg, obj_controller.targetArg);
+                    scr_response(command, obj_controller.responseArg, obj_controller.targetArg);
                 }
             }
             subject = "";

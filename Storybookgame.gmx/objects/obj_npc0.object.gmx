@@ -43,8 +43,6 @@ ds_list_add(talkList, "ask","talk about","leave","goodbye","clear");
 ini_open(working_directory + "\assets\NPCs\" + string_lower(global.location) + "NPC.ini");
 workingName = global.localeNPC[| 0];
 dialogue = ds_map_create();
-show_message(workingName+"intro");
-show_message(ini_section_exists(workingName));
 if ini_key_exists(workingName, workingName+"nameDisc")
 {
     dialogue[? "nameDisc"] = ini_read_string(workingName, workingName+"nameDisc", workingName);
@@ -52,12 +50,10 @@ if ini_key_exists(workingName, workingName+"nameDisc")
 
 if ini_key_exists(workingName, workingName+"intro")
 {
-    show_message("intro exists");
     dialogue[? "intro"] = ini_read_string(workingName, workingName+"intro", "");
 }
 if ini_key_exists(workingName, workingName+"greet")
 {
-    show_message("greet exists");
     dialogue[? "greet"] = ini_read_string(workingName, workingName+"greet", "");
 }
 
@@ -115,8 +111,6 @@ if ini_key_exists(workingName, workingName+"subject")
         }
     }
 }
-show_message(global.localeNPC[| 0]);
-show_message(dialogue[? "name1_2"]);
 ini_close();
 </string>
           </argument>
@@ -176,9 +170,6 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
     } else {
         var greetText = dialogue[? "greet"];                                                            ///if so, uses "greet"
     }
-    show_message(global.progress[? workingName+"Progress"]);
-    show_message(dialogue[? "intro"]);
-    show_message(greetText);
     obj_console.console += greetText;
     greeted = true;
 } else if topic != "" and (greeted = true) and (keyboard_check_pressed(vk_enter) or (bypass != 0)){     ///so it doesnt loop, checks if you pressed enter, or there is a bypass
@@ -193,13 +184,14 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
             greeted = false;
             obj_console.console += "What else would you like to talk about?#";
         }
-        if dialogue[? topic+string(topicProgress)] = "/b"
+        if dialogue[? topic+string(topicProgress)] = "/b"               ///if line is a break "/b" then break
         {
             topic = "";
             topicProgress = -1;
             obj_console.console += "anything else?";
-        } else if dialogue[? topic+string(topicProgress)] = "/l"
+        } else if dialogue[? topic+string(topicProgress)] = "/l"        ///if line is a leave "/l" then leave
         {
+            show_message("fired");
             topic = "";
             topicProgress = -1;
             global.player1State = "normal";
@@ -207,9 +199,15 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
             greeted = false;
             exit;
         } else {
-            if (argNum != -1) and (dialogue[? topic+string(topicProgress)] != undefined)
+            if (argNum != -1) and (dialogue[? topic+string(topicProgress)] != undefined)        ///if there are arguments present
             {
-                obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)];
+                if dialogue[? topic+string(topicProgress)+"_"+string(argNum)] != undefined      ///if it exists, print it
+                {
+                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)];
+                } else {                                                                        ///if not, reset
+                    obj_console.console += dialogue[? topic+string(topicProgress)]
+                    argNum = -1;
+                }
             } else if dialogue[? topic+string(topicProgress)] != undefined {
                 obj_console.console += dialogue[? topic+string(topicProgress)];
             }

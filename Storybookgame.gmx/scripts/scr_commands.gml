@@ -64,3 +64,15 @@ if (command = "clear")
 {
     obj_console.console = "";
 }
+if (command = "debug")
+{
+    switch obj_text.debug
+    {
+        case true:
+            obj_text.debug = false;
+            break;
+        case false:
+            obj_text.debug = true;
+            break;
+    }
+}

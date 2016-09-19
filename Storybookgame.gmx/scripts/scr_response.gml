@@ -2,10 +2,6 @@
 var command = string_lower(argument0);
 var arg = argument1;
 var target = argument2;
-show_message("running");
-show_message(arg);
-show_message(command);
-show_message(string_char_at(arg,string_pos(command+"_",arg)+string_length(command+"_")));
 if target != ""
 {
     switch target
