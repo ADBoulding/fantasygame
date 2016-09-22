@@ -37,29 +37,39 @@ responseList = ds_list_create();
 bypass = 0;
 argNum = -1;
 
+
 ds_list_add(responseList, "yes", "no", "leave");
-ds_list_add(talkList, "ask","talk about","leave","goodbye","clear");
+ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give");
 
-ini_open(working_directory + "\assets\NPCs\" + string_lower(global.location) + "NPC.ini");
 workingName = global.localeNPC[| 0];
+iniName = string_replace_all(workingName, " ", "_");    
+ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
+
 dialogue = ds_map_create();
-if ini_key_exists(workingName, workingName+"nameDisc")
+race = obj_player.race;
+
+if !ini_section_exists(race)
 {
-    dialogue[? "nameDisc"] = ini_read_string(workingName, workingName+"nameDisc", workingName);
+    race = "default";
 }
 
-if ini_key_exists(workingName, workingName+"intro")
+if ini_key_exists(race, "nameDisc")
 {
-    dialogue[? "intro"] = ini_read_string(workingName, workingName+"intro", "");
-}
-if ini_key_exists(workingName, workingName+"greet")
-{
-    dialogue[? "greet"] = ini_read_string(workingName, workingName+"greet", "");
+    dialogue[? "nameDisc"] = ini_read_string(race, "nameDisc", workingName);
 }
 
-if ini_key_exists(workingName, workingName+"subject")
+if ini_key_exists(race, "intro")
 {
-    subject = ini_read_string(workingName, workingName+"subject", "");
+    dialogue[? "intro"] = ini_read_string(race, "intro", "");
+}
+if ini_key_exists(race, "greet")
+{
+    dialogue[? "greet"] = ini_read_string(race, "greet", "");
+}
+
+if ini_key_exists(race, "subject")
+{
+    subject = ini_read_string(race, "subject", "");
     subjects = ds_list_create();
     if (subject != "")
     {
@@ -79,28 +89,28 @@ if ini_key_exists(workingName, workingName+"subject")
     for (i = 0; i &lt; ds_list_size(subjects); i++)
     {
         var sub = subjects[| i];
-        if ini_key_exists(workingName, workingName+sub+"Visible")
+        if ini_key_exists(race, sub+"Visible")
         {
-            dialogue[? sub+"Visible"] = ini_read_string(workingName, workingName+sub+"Visible", "");
+            dialogue[? sub+"Visible"] = ini_read_string(race, sub+"Visible", "");
         }
-        if ini_key_exists(workingName, workingName+sub+"Num")
+        if ini_key_exists(race, sub+"Num")
         {
-            for (n = 0; n &lt; ini_read_real(workingName, workingName+sub+"Num", -1); n++;)
+            for (n = 0; n &lt; ini_read_real(race, sub+"Num", -1); n++;)
             {
-                dialogue[? sub+string(n)] = ini_read_string(workingName, workingName+sub+string(n), "");
-                if ini_key_exists(workingName, workingName+sub+string(n)+"arg")
+                dialogue[? sub+string(n)] = ini_read_string(race, sub+string(n), "");
+                if ini_key_exists(race, sub+string(n)+"arg")
                 {
-                    dialogue[? (sub+string(n)+"arg")] = ini_read_string(workingName, workingName+sub+string(n)+"arg", "");
+                    dialogue[? (sub+string(n)+"arg")] = ini_read_string(race, sub+string(n)+"arg", "");
                 }
-                if ini_key_exists(workingName, workingName+sub+string(n)+"_0")
+                if ini_key_exists(race, sub+string(n)+"_0")
                 {
                     var exists = true
                     var exNum = 0;
                     while (exists = true)
                     {
-                        if ini_key_exists(workingName, workingName+sub+string(n)+"_"+string(exNum))
+                        if ini_key_exists(race, sub+string(n)+"_"+string(exNum))
                         {
-                            dialogue[? (sub+string(n)+"_"+string(exNum))] = ini_read_string(workingName, workingName+sub+string(n)+"_"+string(exNum), "");
+                            dialogue[? (sub+string(n)+"_"+string(exNum))] = ini_read_string(race, sub+string(n)+"_"+string(exNum), "");
                             exNum++;
                         } else {
                             exists = false;
@@ -171,13 +181,14 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
         var greetText = dialogue[? "greet"];                                                            ///if so, uses "greet"
     }
     obj_console.console += greetText;
+    obj_console.console += "(You can ask this NPC about certain topics)";
     greeted = true;
 } else if topic != "" and (greeted = true) and (keyboard_check_pressed(vk_enter) or (bypass != 0)){     ///so it doesnt loop, checks if you pressed enter, or there is a bypass
     bypass = 0;
     var topicLength = dialogue[? topic+"Num"];                          ///gets length of the topic list
     if topicProgress != -1 
     {
-        if topicProgress &gt; topicLength                                  ///if you've exhausted the dialogue it takes you back to the main bit
+        if topicProgress = topicLength                                  ///if you've exhausted the dialogue it takes you back to the main bit
         {
             topic = "";
             topicProgress = -1;
@@ -203,7 +214,7 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
             {
                 if dialogue[? topic+string(topicProgress)+"_"+string(argNum)] != undefined      ///if it exists, print it
                 {
-                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)];
+                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)] + "(press enter to continue)#";
                 } else {                                                                        ///if not, reset
                     obj_console.console += dialogue[? topic+string(topicProgress)]
                     argNum = -1;

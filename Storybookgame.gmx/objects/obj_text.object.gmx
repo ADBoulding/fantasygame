@@ -122,6 +122,10 @@ if debug == true
     draw_text(5,160,npcTrue);
     draw_text(80,10,global.player1State);
     draw_text(180,10,global.localeNPC[| 0]);
+    draw_text(300,10,global.location);
+    draw_text(400,10,global.lSuff);
+    draw_text(500,10,obj_player.race);
+    draw_text(600,10,obj_player.perception);
 }
 
 
@@ -198,18 +202,39 @@ switch global.player1State
         var npcList = global.localeNPC;
         break;
     case "talking":
-        switch obj_controller.waitForResponse 
+        switch obj_player.talkingTo
         {
-            case true:
-                var cmdList = obj_npc0.responseList;
-                var argList = obj_npc0.subjects;
-                var npcList = obj_npc0.objects;
+            case 0:
+                switch obj_controller.waitForResponse 
+                {
+                    case true:
+                        var cmdList = obj_npc0.responseList;
+                        var argList = obj_npc0.subjects;
+                        var npcList = obj_npc0.objects;
+                        break;
+                    case false:
+                        var cmdList = obj_npc0.talkList;
+                        var argList = obj_npc0.subjects;
+                        var npcList = obj_npc0.objects;
+                        subject = string_lower(subject);
+                        break;
+                }
                 break;
-            case false:
-                var cmdList = obj_npc0.talkList;
-                var argList = obj_npc0.subjects;
-                var npcList = obj_npc0.objects;
-                subject = string_lower(subject);
+            case 1:
+                switch obj_controller.waitForResponse 
+                {
+                    case true:
+                        var cmdList = obj_npc1.responseList;
+                        var argList = obj_npc1.subjects;
+                        var npcList = obj_npc1.objects;
+                        break;
+                    case false:
+                        var cmdList = obj_npc1.talkList;
+                        var argList = obj_npc1.subjects;
+                        var npcList = obj_npc1.objects;
+                        subject = string_lower(subject);
+                        break;
+                }
                 break;
         }
         break;

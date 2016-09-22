@@ -41,12 +41,25 @@ if (global.started = true)
                     break;
                 case "goodbye":
                 case "leave":
-                    obj_console.console += "You leave the conversation to go about your day...#"
-                    global.player1State = "normal";
-                    obj_npc0.isTalking = false;
-                    obj_npc0.greeted = false;
-                    obj_npc0.topic = "";
-                    obj_npc0.topicProgress = -1;
+                    switch obj_player.talkingTo
+                    {
+                        case 0:
+                            obj_console.console += "You leave the conversation to go about your day...#"
+                            global.player1State = "normal";
+                            obj_npc0.isTalking = false;
+                            obj_npc0.greeted = false;
+                            obj_npc0.topic = "";
+                            obj_npc0.topicProgress = -1;
+                            break;
+                        case 1:
+                            obj_console.console += "You leave the conversation to go about your day...#"
+                            global.player1State = "normal";
+                            obj_npc1.isTalking = false;
+                            obj_npc1.greeted = false;
+                            obj_npc1.topic = "";
+                            obj_npc1.topicProgress = -1;
+                            break;
+                    }
                     break;
             }
     }

@@ -27,12 +27,57 @@
             <kind>1</kind>
             <string>///Player variables
 global.player1State = "normal";
-global.talkingTo = -1;
+talkingTo = -1;
 
 global.progress = ds_map_create();
 global.progress[? "Old ManProgress"] = -1;
 global.progress[? "CatProgress"] = -1;
 
+name = "";
+race = "Human";
+perception = 1;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///adds removes perception, etc
+switch(keyboard_key)
+{
+    case(vk_up):
+        if perception != 3
+        {
+            perception += 1;
+        } else {
+            perception = 1;
+        }
+        break;
+    case(vk_left):
+        if race = "Human"
+        {
+            race = "Bear";
+        } else {
+            race = "Human";
+        }
+}
 </string>
           </argument>
         </arguments>

@@ -25,8 +25,215 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialtes the npc character
-ini_open(working_directory + "\assets\location\" + string_lower(global.location) + "NPC.ini");
+            <string>///Handles the NPC creation
+
+isTalking = false;
+topic = "";
+topicProgress = -1;
+greeted = false;
+objects = ds_list_create();
+talkList = ds_list_create();
+responseList = ds_list_create();
+bypass = 0;
+argNum = -1;
+
+
+ds_list_add(responseList, "yes", "no", "leave");
+ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give");
+
+workingName = global.localeNPC[| 1];
+iniName = string_replace_all(workingName, " ", "_");    
+ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
+
+dialogue = ds_map_create();
+race = obj_player.race;
+
+if !ini_section_exists(race)
+{
+    race = "default";
+}
+
+
+if ini_key_exists(race, "nameDisc")
+{
+    dialogue[? "nameDisc"] = ini_read_string(race, "nameDisc", workingName);
+}
+
+if ini_key_exists(race, "intro")
+{
+    dialogue[? "intro"] = ini_read_string(race, "intro", "");
+}
+if ini_key_exists(race, "greet")
+{
+    dialogue[? "greet"] = ini_read_string(race, "greet", "");
+}
+
+if ini_key_exists(race, "subject")
+{
+    subject = ini_read_string(race, "subject", "");
+    subjects = ds_list_create();
+    if (subject != "")
+    {
+        var arr;
+        var del = ",";
+        var str = subject + del;
+        var len = string_length(del);
+        var ind = 0;
+        repeat (string_count(del, str)) {
+            var pos = string_pos(del, str) - 1;
+            arr = string_copy(str, 1, pos);
+            str = string_delete(str, 1, pos + len);
+            ds_list_add(subjects, arr);
+            arr = 0;
+        }
+    }
+    for (i = 0; i &lt; ds_list_size(subjects); i++)
+    {
+        var sub = subjects[| i];
+        if ini_key_exists(race, sub+"Visible")
+        {
+            dialogue[? sub+"Visible"] = ini_read_string(race, sub+"Visible", "");
+        }
+        if ini_key_exists(race, sub+"Num")
+        {
+            for (n = 0; n &lt; ini_read_real(race, sub+"Num", -1); n++;)
+            {
+                dialogue[? sub+string(n)] = ini_read_string(race, sub+string(n), "");
+                if ini_key_exists(race, sub+string(n)+"arg")
+                {
+                    dialogue[? (sub+string(n)+"arg")] = ini_read_string(race, sub+string(n)+"arg", "");
+                }
+                if ini_key_exists(race, sub+string(n)+"_0")
+                {
+                    var exists = true
+                    var exNum = 0;
+                    while (exists = true)
+                    {
+                        if ini_key_exists(race, sub+string(n)+"_"+string(exNum))
+                        {
+                            dialogue[? (sub+string(n)+"_"+string(exNum))] = ini_read_string(race, sub+string(n)+"_"+string(exNum), "");
+                            exNum++;
+                        } else {
+                            exists = false;
+                        }
+                    }
+                }
+            }  
+        }
+    }
+}
+
+ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///destroys maps and lists
+ds_map_destroy(dialogue);
+ds_list_destroy(subjects);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Actual Dialogue stuff
+
+if (global.player1State == "talking") and (isTalking == true) and (topic = "") and (greeted = false)    ///Checks to see if you are in conversation
+{
+    if global.progress[? workingName+"Progress"] = -1                                                   ///Checks to see if you have talked with the npc before
+    {
+        var greetText = dialogue[? "intro"];                                                            ///if no, uses the intro
+        global.progress[? workingName+"Progress"] = 0;
+    } else {
+        var greetText = dialogue[? "greet"];                                                            ///if so, uses "greet"
+    }
+    obj_console.console += greetText;
+    greeted = true;
+} else if topic != "" and (greeted = true) and (keyboard_check_pressed(vk_enter) or (bypass != 0)){     ///so it doesnt loop, checks if you pressed enter, or there is a bypass
+    bypass = 0;
+    var topicLength = dialogue[? topic+"Num"];                          ///gets length of the topic list
+    if topicProgress != -1 
+    {
+        if topicProgress &gt; topicLength                                  ///if you've exhausted the dialogue it takes you back to the main bit
+        {
+            topic = "";
+            topicProgress = -1;
+            greeted = false;
+            obj_console.console += "What else would you like to talk about?#";
+        }
+        if dialogue[? topic+string(topicProgress)] = "/b"               ///if line is a break "/b" then break
+        {
+            topic = "";
+            topicProgress = -1;
+            obj_console.console += "anything else?";
+        } else if dialogue[? topic+string(topicProgress)] = "/l"        ///if line is a leave "/l" then leave
+        {
+            show_message("fired");
+            topic = "";
+            topicProgress = -1;
+            global.player1State = "normal";
+            isTalking = false;
+            greeted = false;
+            exit;
+        } else {
+            if (argNum != -1) and (dialogue[? topic+string(topicProgress)] != undefined)        ///if there are arguments present
+            {
+                if dialogue[? topic+string(topicProgress)+"_"+string(argNum)] != undefined      ///if it exists, print it
+                {
+                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)];
+                } else {                                                                        ///if not, reset
+                    obj_console.console += dialogue[? topic+string(topicProgress)]
+                    argNum = -1;
+                }
+            } else if dialogue[? topic+string(topicProgress)] != undefined {
+                obj_console.console += dialogue[? topic+string(topicProgress)];
+            }
+            if dialogue[? topic+string(topicProgress)+"arg"] != undefined
+            {
+                obj_controller.waitForResponse = true;
+                obj_controller.responseArg = dialogue[? topic+string(topicProgress)+"arg"];      
+                obj_controller.targetArg = "obj_npc1";      
+            } else {
+                topicProgress += 1;
+            }
+        } 
+    }
+}
 </string>
           </argument>
         </arguments>

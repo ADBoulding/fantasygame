@@ -12,7 +12,8 @@ switch npcNum
         break;       
     case 1:
         obj_npc1.isTalking = true;
-        obj_text.whoTalk = 1;
+        obj_player.talkingTo = 1;
+        global.player1State = "talking";
         break;
     case 2:
         obj_npc2.isTalking = true;

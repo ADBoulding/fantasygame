@@ -28,8 +28,6 @@
             <string>///This handles all the code and text from a location file
 
 ini_open(working_directory + "\assets\location\" + string_lower(global.location) + ".ini");
-townName = ini_read_string("regionValues", "townname", "noread");
-isShop = ini_read_string("regionValues", "isshop", false);
 
 //Creates a map of the local and checks if there are arrays
 localPlacesNum = ini_read_real("localPlaces","localPlacesNum", -1);
@@ -87,11 +85,6 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
 
     
 ini_close();
-
-localValues = ds_map_create();
-ds_map_add(localValues, "townName", townName);
-ds_map_add(localValues, "isShop", isShop);
-ds_map_add(localValues, "progress", 0);
 
 if (global.started == false)
 {

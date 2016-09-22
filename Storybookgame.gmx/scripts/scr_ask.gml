@@ -6,4 +6,8 @@ switch obj_player.talkingTo
         obj_npc0.topic = topic;
         obj_npc0.topicProgress = 0;
         break;
+    case 1:
+        obj_npc1.topic = topic;
+        obj_npc1.topicProgress = 0;
+        break;
 }
