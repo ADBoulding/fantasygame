@@ -35,6 +35,8 @@ bypass = 0;
 argNum = -1;
 canSee = -1;
 isShop = -1;
+nameVis = "";
+undisc = true;
 
 workingName = global.localeNPC[| instNum];
 
@@ -42,7 +44,20 @@ var npc = ds_map_find_value(global.npcMap, workingName);
 
 var npcSize = ds_map_size(npc);
 
-if 
+if npc[? "undisc"] != undefined {
+    nameVis = npc[? "undisc"];
+} else {
+    nameVis = workingName;
+}
+if npc[? "canSee"] != undefined {
+    canSee = npc[? "canSee"];
+}
+if npc[? "state"] != undefined &amp;&amp; global.progress[? workingName] = undefined {
+    global.progress[? workingName] = npc[? "state"];
+}
+show_message(nameVis);
+show_message(canSee);
+show_message(global.progress[? workingName]);
 
 /*ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
 

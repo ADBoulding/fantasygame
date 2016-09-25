@@ -37,9 +37,16 @@ if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
         for (i = 0; i < ds_list_size(global.localeNPC); i++;) //makes a loop for everything in the list
         {
             var npcTarget = instance_find(obj_npc, i);
-            if (global.localeNPC[| i] != "") and (npcTarget.canSee = 1)
+            if (global.localeNPC[| i] != "") && (npcTarget.canSee = 1)
             {
-                switch string_char_at(string_lower(global.localeNPC[| i]), 1)
+                var nam = "";
+                if npcTarget.undisc = true
+                {
+                    nam = npcTarget.nameVis;
+                } else {
+                    nam = global.localeNPC[| i];
+                }
+                switch string_char_at(string_lower(nam), 1)
                 {
                     case "a":
                     case "e":
@@ -53,7 +60,7 @@ if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
                         var tempa = "a";
                         break;
                 }
-                obj_console.console += "    - " + tempa + " " + global.localeNPC[| i] + "#";
+                obj_console.console += "    - " + tempa + " " + nam + "#";
             }
         }
     }
