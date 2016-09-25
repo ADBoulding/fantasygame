@@ -37,9 +37,14 @@ canSee = -1;
 isShop = -1;
 
 workingName = global.localeNPC[| instNum];
-iniName = string_replace_all(workingName, " ", "_");    
 
-ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
+var npc = ds_map_find_value(global.npcMap, workingName);
+
+var npcSize = ds_map_size(npc);
+
+if 
+
+/*ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
 
 dialogue = ds_map_create();
 race = obj_player.race;
@@ -131,6 +136,7 @@ if ini_key_exists(race, "subject")
     }
 }
 ini_close();
+*/
 
 </string>
           </argument>
@@ -187,7 +193,7 @@ ds_list_destroy(subjects);
           <argument>
             <kind>1</kind>
             <string>///Actual Dialogue stuff
-
+/*
 if (global.player1State == "talking") and (isTalking == true) and (topic = "") and (greeted = false)    ///Checks to see if you are in conversation
 {
     if global.progress[? workingName+"Progress"] = -1                                                   ///Checks to see if you have talked with the npc before
@@ -250,6 +256,8 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
         } 
     }
 }
+*/
+
 </string>
           </argument>
         </arguments>

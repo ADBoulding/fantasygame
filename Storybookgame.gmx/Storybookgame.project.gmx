@@ -3,9 +3,9 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="7" name="datafiles">
-    <datafiles number="7" name="assets">
-      <datafiles number="7" name="location">
+  <datafiles number="11" name="datafiles">
+    <datafiles number="11" name="assets">
+      <datafiles number="11" name="location">
         <datafile>
           <name>introburg.ini</name>
           <exists>-1</exists>
@@ -24,9 +24,9 @@
           <filename>introburg.ini</filename>
         </datafile>
       </datafiles>
-      <datafiles number="7" name="NPCs">
-        <datafiles number="7" name="location">
-          <datafiles number="7" name="introburg">
+      <datafiles number="11" name="NPCs">
+        <datafiles number="11" name="location">
+          <datafiles number="11" name="introburg">
             <datafile>
               <name>Cat.ini</name>
               <exists>-1</exists>
@@ -80,6 +80,23 @@
             </datafile>
           </datafiles>
         </datafiles>
+        <datafile>
+          <name>introburgNPC.json</name>
+          <exists>-1</exists>
+          <size>238</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>introburgNPC.json</filename>
+        </datafile>
       </datafiles>
     </datafiles>
   </datafiles>

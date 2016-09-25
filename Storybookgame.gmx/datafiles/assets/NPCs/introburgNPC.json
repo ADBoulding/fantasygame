@@ -1,42 +1,17 @@
 {
-  "Shumblegore": {
-    "undisc":"Old Man",
-    "canSee": true,
-	"intro": "The old man looks at you with kind knowing eyes and with great gusto shouts, 'Behold, my dear man! I am the all knowing Wizard Shumblegore!!!'#He then starts waving his hands in the air whilst focusing on an apple on the table...#...nothing happens.#",
-	"greet": "...I really am a wizard#",
-    "subjects": [
-      "name",
-      "wizards"
-    ],
-    "name": [
-      "Shumblegore looks at you with a sly grin and squinted eyes... 'I bet you would like to know why I, Dan, was given the great title Shumblegore!!'#...(How do you Answer?)#",
-      "I chose it!!#"
-    ],
-    "wizards": [
-      "magic is totally real!#",
-      "I swear#"
-    ]
-  },
-  "Fernando": {
-    "undisc": "Cat",
-    "canSee": true,
-	"intro": "The cat looks at you with condescending eyes...#'You know you shouldn't talk to animals,' it says to you.#",
-	"greet": "meow...#",
-    "subjects": [
-      "mice",
-      "quantum mechanics"
-    ],
-    "mice": [
-      "meow#"
-    ],
-    "quantum mechanics": [
-      "It's really quite simple... I mean... meow#",
-      "...meow#"
-    ]
-  },
-  "Shopkeeper": {
-    "canSee": true,
-    "intro": "The grizzled shopkeeper grunts at your presence, you assume you have his attention.#",
-	"greet": "Sup#"
-  }
+	"Shumblegore" : {
+		"undisc" : "Old Man",
+		"canSee" : true,
+		"state" : -1
+	},
+	"Fernando" : {
+		"undisc" : "Cat",
+		"canSee" : true,
+		"state" : -1
+	},
+	"Shopkeeper" : {
+		"undisc" : "Shopkeeper",
+		"canSee" : true,
+		"state" : -1
+	}
 }
