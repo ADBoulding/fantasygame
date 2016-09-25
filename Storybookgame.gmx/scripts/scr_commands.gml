@@ -24,6 +24,7 @@ if (global.started = true)
                     scr_talk(npc);
                     break;
             }
+            break;
         case "talking":
             switch command
             {
@@ -43,6 +44,7 @@ if (global.started = true)
                     targetNPC.topic = "";
                     targetNPC.topicProgress = -1;
                     break;
+            break;
             }
     }
 } else if (command = "start") and (global.started = false)

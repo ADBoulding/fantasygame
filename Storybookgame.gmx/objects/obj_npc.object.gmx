@@ -34,6 +34,7 @@ greeted = false;
 bypass = 0;
 argNum = -1;
 canSee = -1;
+isShop = -1;
 
 workingName = global.localeNPC[| instNum];
 iniName = string_replace_all(workingName, " ", "_");    
@@ -46,6 +47,10 @@ race = obj_player.race;
 if ini_key_exists("default", "canSee")
 {
     canSee = ini_read_real("default", "canSee", 1);
+}
+if ini_key_exists("default", "isShop")
+{
+    isShop = ini_read_real("default", "isShop", 1);
 }
 
 if !ini_section_exists(race)
