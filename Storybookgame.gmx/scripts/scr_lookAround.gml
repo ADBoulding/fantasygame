@@ -26,7 +26,6 @@ if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
                         break;
                 }
                 obj_console.console += "    - " + tempa + " " + global.goDest[| i] + "#";
-                ///show_message(ds_list_size(global.goDest));
             }
         }
     } else {
@@ -37,7 +36,8 @@ if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
         obj_console.console += "In this area you can interact with... (SORTA WORKS)#";
         for (i = 0; i < ds_list_size(global.localeNPC); i++;) //makes a loop for everything in the list
         {
-            if global.localeNPC[| i] != ""
+            var npcTarget = instance_find(obj_npc, i);
+            if (global.localeNPC[| i] != "") and (npcTarget.canSee = 1)
             {
                 switch string_char_at(string_lower(global.localeNPC[| i]), 1)
                 {

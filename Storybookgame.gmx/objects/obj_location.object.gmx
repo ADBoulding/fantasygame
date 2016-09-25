@@ -57,28 +57,15 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
             ///show_message("Num Key exists");
             var canAccessT = ini_read_string(localArray[i], "canAccess", undefined);
             ds_map_add(global.locale, string_lower(localArray[i]) + ".canAccess", canAccessT);
-            ds_list_add(global.commandList, "go");
+            ds_list_add(obj_controller.commandList, "go");
         } else {
             show_message("Num Key does not exist");
         } 
-        
-        if (ini_key_exists(localArray[i], "isShop"))
+        if (ini_key_exists(localArray[i], localArray[i] + "NPC"))
         {
-            ///show_message(ini_read_real(localArray[i], "isShop", -1));
-            if (ini_read_real(localArray[i], "isShop", -1) = 1)
-            {
-                ds_map_add(global.locale, string_lower(localArray[i]) + ".isShop", true);
-            }
-        }
-        
-        if (ini_key_exists(localArray[i], "isNPC"))
-        {
-            if (ini_read_real(localArray[i], "isNPC", 0) != 0)
-            {
-                var npcList = ini_read_string(localArray[i], localArray[i] + "NPC", "");
-                ds_map_add(global.locale, string_lower(localArray[i]) + ".NPC", npcList);
-                ds_list_add(global.commandList, "talk");
-            }
+            var npcList = ini_read_string(localArray[i], localArray[i] + "NPC", "");
+            ds_map_add(global.locale, string_lower(localArray[i]) + ".NPC", npcList);
+            ds_list_add(obj_controller.commandList, "talk");
         }
     }
 }    

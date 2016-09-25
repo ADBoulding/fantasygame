@@ -126,6 +126,7 @@ if debug == true
     draw_text(400,10,global.lSuff);
     draw_text(500,10,obj_player.race);
     draw_text(600,10,obj_player.perception);
+    draw_text(700,10,obj_player.talkingTo);
 }
 
 
@@ -197,44 +198,23 @@ if (cmdTrue) and (string_length(subject) &gt; 1) and (string_pos(" ", subject) &
 switch global.player1State
 {
     case "normal":
-        var cmdList = global.commandList;
+        var cmdList = obj_controller.commandList;
         var argList = global.goDest;
         var npcList = global.localeNPC;
         break;
     case "talking":
-        switch obj_player.talkingTo
+        switch obj_controller.waitForResponse 
         {
-            case 0:
-                switch obj_controller.waitForResponse 
-                {
-                    case true:
-                        var cmdList = obj_npc0.responseList;
-                        var argList = obj_npc0.subjects;
-                        var npcList = obj_npc0.objects;
-                        break;
-                    case false:
-                        var cmdList = obj_npc0.talkList;
-                        var argList = obj_npc0.subjects;
-                        var npcList = obj_npc0.objects;
-                        subject = string_lower(subject);
-                        break;
-                }
+            case true:
+                var cmdList = obj_controller.responseList;
+                var argList = obj_controller.subjects;
+                var npcList = obj_controller.objects;
                 break;
-            case 1:
-                switch obj_controller.waitForResponse 
-                {
-                    case true:
-                        var cmdList = obj_npc1.responseList;
-                        var argList = obj_npc1.subjects;
-                        var npcList = obj_npc1.objects;
-                        break;
-                    case false:
-                        var cmdList = obj_npc1.talkList;
-                        var argList = obj_npc1.subjects;
-                        var npcList = obj_npc1.objects;
-                        subject = string_lower(subject);
-                        break;
-                }
+            case false:
+                var cmdList = obj_controller.talkList;
+                var argList = obj_controller.subjects;
+                var npcList = obj_controller.objects;
+                subject = string_lower(subject);
                 break;
         }
         break;
@@ -357,7 +337,7 @@ if !keyboard_check(vk_control)
             break;
     }
 }
-if (ds_list_find_index(cmdList, string_lower(subject)) != -1)                       ///actively checks if the subject is a comman
+if (ds_list_find_index(cmdList, string_lower(subject)) != -1)                       ///actively checks if the subject is a command
 {
     cmdText = subject;
     cmdTrue = true;

@@ -26,27 +26,27 @@
           <argument>
             <kind>1</kind>
             <string>///Handles the NPC creation
-
+instNum = instance_number(obj_npc)-1;
 isTalking = false;
 topic = "";
 topicProgress = -1;
 greeted = false;
-objects = ds_list_create();
-talkList = ds_list_create();
-responseList = ds_list_create();
 bypass = 0;
 argNum = -1;
+canSee = -1;
 
-
-ds_list_add(responseList, "yes", "no", "leave");
-ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give");
-
-workingName = global.localeNPC[| 0];
+workingName = global.localeNPC[| instNum];
 iniName = string_replace_all(workingName, " ", "_");    
+
 ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
 
 dialogue = ds_map_create();
 race = obj_player.race;
+
+if ini_key_exists("default", "canSee")
+{
+    canSee = ini_read_real("default", "canSee", 1);
+}
 
 if !ini_section_exists(race)
 {
@@ -89,6 +89,10 @@ if ini_key_exists(race, "subject")
     for (i = 0; i &lt; ds_list_size(subjects); i++)
     {
         var sub = subjects[| i];
+        if ds_list_find_index(obj_controller.subjects, sub) = -1
+        {
+            ds_list_add(obj_controller.subjects, sub);
+        }
         if ini_key_exists(race, sub+"Visible")
         {
             dialogue[? sub+"Visible"] = ini_read_string(race, sub+"Visible", "");
@@ -122,6 +126,7 @@ if ini_key_exists(race, "subject")
     }
 }
 ini_close();
+
 </string>
           </argument>
         </arguments>
@@ -146,7 +151,14 @@ ini_close();
             <kind>1</kind>
             <string>///destroys maps and lists
 ds_map_destroy(dialogue);
+for (i = 0; i &lt; ds_list_size(subjects); i++)
+{
+    var sub = subjects[| i];
+    ds_list_delete(obj_controller.subjects, ds_list_find_index(obj_controller.subjects, sub));
+}
 ds_list_destroy(subjects);
+
+
 </string>
           </argument>
         </arguments>
@@ -181,7 +193,7 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
         var greetText = dialogue[? "greet"];                                                            ///if so, uses "greet"
     }
     obj_console.console += greetText;
-    obj_console.console += "(You can ask this NPC about certain topics)";
+    obj_console.console += "(You can ask this NPC about certain topics)#";
     greeted = true;
 } else if topic != "" and (greeted = true) and (keyboard_check_pressed(vk_enter) or (bypass != 0)){     ///so it doesnt loop, checks if you pressed enter, or there is a bypass
     bypass = 0;
@@ -214,7 +226,7 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
             {
                 if dialogue[? topic+string(topicProgress)+"_"+string(argNum)] != undefined      ///if it exists, print it
                 {
-                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)] + "(press enter to continue)#";
+                    obj_console.console += dialogue[? topic+string(topicProgress)+"_"+string(argNum)];
                 } else {                                                                        ///if not, reset
                     obj_console.console += dialogue[? topic+string(topicProgress)]
                     argNum = -1;
@@ -226,7 +238,7 @@ if (global.player1State == "talking") and (isTalking == true) and (topic = "") a
             {
                 obj_controller.waitForResponse = true;
                 obj_controller.responseArg = dialogue[? topic+string(topicProgress)+"arg"];      
-                obj_controller.targetArg = "obj_npc0";      
+                obj_controller.targetArg = id;      
             } else {
                 topicProgress += 1;
             }
