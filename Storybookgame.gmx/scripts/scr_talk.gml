@@ -1,6 +1,9 @@
 ///scr_talk(target)
 var npc = argument0;
 var npcNum = ds_list_find_index(global.localeNPC, npc);
+if npcNum > instance_number(obj_npc) {
+    npcNum = npcNum - instance_number(obj_npc);
+}
 obj_player.state = "talking";
 if npcNum != -1
 {

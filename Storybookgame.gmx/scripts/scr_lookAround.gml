@@ -34,7 +34,7 @@ if (ds_exists(global.locale, ds_type_map)) //checks if the location data exists
     if !ds_list_empty(global.localeNPC)
     {
         obj_console.console += "In this area you can interact with... (SORTA WORKS)#";
-        for (i = 0; i < ds_list_size(global.localeNPC); i++;) //makes a loop for everything in the list
+        for (i = 0; i < instance_number(obj_npc); i++;) //makes a loop for everything in the list
         {
             var npcTarget = instance_find(obj_npc, i);
             if (global.localeNPC[| i] != "") && (npcTarget.canSee = 1)

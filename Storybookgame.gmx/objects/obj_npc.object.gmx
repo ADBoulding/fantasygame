@@ -49,15 +49,19 @@ if npc[? "undisc"] != undefined {
 } else {
     nameVis = workingName;
 }
+if ds_list_find_index(global.localeNPC, nameVis) != 1 {
+    ds_list_add(global.localeNPC, nameVis);
+} else {
+    ds_list_add(global.localeNPC, "placeholder");
+}
+
 if npc[? "canSee"] != undefined {
     canSee = npc[? "canSee"];
 }
 if npc[? "state"] != undefined &amp;&amp; global.progress[? workingName] = undefined {
     global.progress[? workingName] = npc[? "state"];
 }
-show_message(nameVis);
-show_message(canSee);
-show_message(global.progress[? workingName]);
+
 
 /*ini_open(working_directory + "\assets\NPCs\location\" + string_lower(global.location) + "\" + iniName + ".ini");
 
