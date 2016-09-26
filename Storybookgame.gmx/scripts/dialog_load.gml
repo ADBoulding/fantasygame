@@ -37,7 +37,7 @@ if string_contains(argument2,"Message")
     n+=1
     }
     justPressed = true;
-    obj_console.console += string(message);
+    obj_console.console += string(message) + "#";
 }
 }
 ini_close()

@@ -35,7 +35,7 @@ argTrue = false;
 npcText = "";
 npcTrue = false;
 whoTalk = 0;
-debug = false;
+debug = true;
 
 command = "";
 enabled_keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890,./&lt;&gt;?;':[]-=`~";
