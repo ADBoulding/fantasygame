@@ -26,7 +26,14 @@ if (global.started = true)
             }
             break;
         case "talking":
-            switch command
+            var talkNum = ds_list_find_index(obj_dialogue.answerList, command);
+            if talkNum != -1 {
+                dialog_load(obj_dialogue.file,obj_dialogue.section,obj_dialogue.dia_dest[talkNum]);
+            }
+            
+            //  Redundant for now, but Kept for good measure... for now.
+            
+            /*switch command            
             {
                 case "talk about":
                 case "ask":
@@ -43,9 +50,9 @@ if (global.started = true)
                     targetNPC.greeted = false;
                     targetNPC.topic = "";
                     targetNPC.topicProgress = -1;
-                    break;
+                    break;            
+            }*/
             break;
-            }
     }
 } else if (command = "start") and (global.started = false)
 {

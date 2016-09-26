@@ -203,20 +203,9 @@ switch global.player1State
         var npcList = global.localeNPC;
         break;
     case "talking":
-        switch obj_controller.waitForResponse 
-        {
-            case true:
-                var cmdList = obj_controller.responseList;
-                var argList = obj_controller.subjects;
-                var npcList = obj_controller.objects;
-                break;
-            case false:
-                var cmdList = obj_controller.talkList;
-                var argList = obj_controller.subjects;
-                var npcList = obj_controller.objects;
-                subject = string_lower(subject);
-                break;
-        }
+        var cmdList = obj_dialogue.answerList;
+        var argList = obj_dialogue.answerList;
+        var npcList = obj_controller.objects;
         break;
 }
 ///------------------------------------------------------end list chage
