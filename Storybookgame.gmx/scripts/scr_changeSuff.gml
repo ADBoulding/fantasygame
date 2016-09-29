@@ -1,5 +1,11 @@
 ///scr_changeSuff(destination)
-
+if instance_exists(obj_npc)
+{
+    with (obj_npc)
+   {
+    instance_destroy();
+   }
+}
 if ds_exists(global.goDest, ds_type_list) ///checks if there is a list holding desitinations in the current suffix and replaces it
 {
     ds_list_destroy(global.goDest);
