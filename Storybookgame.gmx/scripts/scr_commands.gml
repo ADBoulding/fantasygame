@@ -23,6 +23,9 @@ if (global.started = true)
                 case "talk":
                     scr_talk(npc);
                     break;
+                case "browse":
+                    scr_shop();
+                    break;
             }
             break;
         case "talking":

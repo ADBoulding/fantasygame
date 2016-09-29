@@ -60,7 +60,7 @@ talkList = ds_list_create();
 responseList = ds_list_create();
 subjects = ds_list_create();
 
-ds_list_add(commandList, "look around","exit game","exists","start","clear","debug");
+ds_list_add(commandList, "look around","exit game","exists","start","clear","debug","browse");
 ds_list_add(responseList, "yes", "no", "leave");
 ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give","debug");
 
