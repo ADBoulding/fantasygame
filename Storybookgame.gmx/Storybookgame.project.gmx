@@ -119,11 +119,11 @@
       </datafiles>
     </datafiles>
   </datafiles>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\bbtextbox</extension>
+  </NewExtensions>
   <sounds name="sound"/>
-  <sprites name="sprites">
-    <sprite>sprites\sprite0</sprite>
-  </sprites>
+  <sprites name="sprites"/>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -150,6 +150,10 @@
       <script>scripts\dialog_trigger.gml</script>
       <script>scripts\string_contains.gml</script>
     </scripts>
+    <script>scripts\textbox.gml</script>
+    <script>scripts\instant_textbox.gml</script>
+    <script>scripts\string_to_color.gml</script>
+    <script>scripts\bbtextbox_readme.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
@@ -165,6 +169,7 @@
       <object>objects\obj_npc</object>
     </objects>
     <object>objects\obj_dialogue</object>
+    <object>objects\obj_textbox</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_game</room>

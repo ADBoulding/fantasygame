@@ -16,6 +16,7 @@ if (global.started = true)
                     scr_go(arg);
                     break;
                 case "exists":
+                    show_message(instance_number(obj_npc));
                     break;
                 case "look around":
                     scr_lookAround();
