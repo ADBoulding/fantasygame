@@ -51,6 +51,12 @@ for (var i = 0; i &lt; (localPlacesNum + 1); i++)
         } else {
             show_message("Str Key does not exist");
         }
+        //Checks for combat capabilities
+        if (ini_key_exists(localArray[i], localArray[i] + "combat"))
+        {
+            var combatT = ini_read_string(localArray[i], localArray[i] + "combat", undefined);
+            ds_map_add(global.locale, string_lower(localArray[i]) + ".combat", combatT);
+        } 
         ///Checks the areas the location can access
         if (ini_key_exists(localArray[i], "canAccess"))
         {

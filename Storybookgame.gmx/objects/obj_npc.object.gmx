@@ -28,19 +28,17 @@
             <string>///Handles the NPC creation
 instNum = instance_number(obj_npc)-1;
 isTalking = false;
-topic = "";
-topicProgress = -1;
-greeted = false;
-bypass = 0;
-argNum = -1;
 canSee = -1;
 isShop = -1;
 nameVis = "";
 undisc = true;
+prog = -1;
+disposition = -1;
+talkedNum = -1;
 
 workingName = global.localeNPC[| instNum];
 
-var npc = ds_map_find_value(global.npcMap, workingName);
+npc = ds_map_find_value(global.npcMap, workingName);
 
 if npc[? "undisc"] != undefined {
     nameVis = npc[? "undisc"];
@@ -55,9 +53,6 @@ if ds_list_find_index(global.localeNPC, nameVis) != 1 {
 
 if npc[? "canSee"] != undefined {
     canSee = npc[? "canSee"];
-}
-if npc[? "state"] != undefined &amp;&amp; global.progress[? workingName] = undefined {
-    global.progress[? workingName] = npc[? "state"];
 }
 
 
@@ -155,6 +150,46 @@ if ini_key_exists(race, "subject")
 ini_close();
 */
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///remove stuff and save
+if obj_player.npcProg[? workingName+".prog"] = undefined
+{
+   if obj_player.npcProg[? workingName+".prog"] != prog {
+        obj_player.npcProg[? workingName+".prog"] = prog;
+   }
+   if obj_player.npcProg[? workingName+".undisc"] != undisc {
+        obj_player.npcProg[? workingName+".undisc"] = undisc;
+   }
+   if obj_player.npcProg[? workingName+".disp"] != disp {
+        obj_player.npcProg[? workingName+".disp"] = disp;
+   }
+   if obj_player.npcProg[? workingName+".talkedNum"] != talkedNum {
+        obj_player.npcProg[? workingName+".talkedNum"] = talkedNum;
+   }
+}
+
+ds_map_destroy(npc);
 </string>
           </argument>
         </arguments>

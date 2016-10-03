@@ -27,6 +27,9 @@ if (global.started = true)
                 case "browse":
                     scr_shop();
                     break;
+                case "fight":
+                    scr_combat();
+                    break;
             }
             break;
         case "talking":

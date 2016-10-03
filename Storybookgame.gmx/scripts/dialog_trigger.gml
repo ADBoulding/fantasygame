@@ -24,5 +24,10 @@ if op=1{o_player.spd+=-value}//Subtracting
 if op=2{o_player.spd=value}//Setting
 }
 
+if string_contains(expression,"nameLearned")
+{
+    
+}
+
 
 

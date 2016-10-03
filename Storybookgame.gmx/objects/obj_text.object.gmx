@@ -127,6 +127,16 @@ if debug == true
     draw_text(500,10,obj_player.race);
     draw_text(600,10,obj_player.perception);
     draw_text(700,10,obj_player.talkingTo);
+    
+    if instance_exists(obj_npc){
+    var npc = instance_find(obj_npc,obj_player.talkingTo);
+    if npc != noone {
+    draw_text(800,10,npc.prog);
+    draw_text(800,35,npc.nameVis);
+    draw_text(800,60,npc.disposition);
+    draw_text(800,85,npc.talkedNum);
+    }
+    }
 }
 
 

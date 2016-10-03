@@ -136,6 +136,7 @@
       <script>scripts\scr_talk.gml</script>
       <script>scripts\scr_ask.gml</script>
       <script>scripts\scr_shop.gml</script>
+      <script>scripts\scr_combat.gml</script>
     </scripts>
     <scripts name="change scene">
       <script>scripts\scr_lChange.gml</script>

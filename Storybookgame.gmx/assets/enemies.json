@@ -1,0 +1,17 @@
+{
+	"Gladiator" : {
+		"health" : 5,
+		"attack" : 2,
+		"defence" : 2
+	},
+	"Ruffian" : {
+		"health" : 2,
+		"attack" : 3,
+		"defence" : 1
+	},
+	"Bandit" : {
+		"health" : 3,
+		"attack" : 3,
+		"defence" : 2
+	}
+}

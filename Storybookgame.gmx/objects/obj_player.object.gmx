@@ -29,9 +29,7 @@
 global.player1State = "normal";
 talkingTo = -1;
 
-global.progress = ds_map_create();
-global.progress[? "Old ManProgress"] = -1;
-global.progress[? "CatProgress"] = -1;
+npcProg = ds_map_create();
 
 name = "";
 race = "Human";
