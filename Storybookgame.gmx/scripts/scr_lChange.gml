@@ -21,7 +21,6 @@ while (!file_text_eof(jsonNPC))
     file_text_readln(jsonNPC);
 }
 file_text_close(jsonNPC);
-
 global.npcMap = json_decode(npcData);
 
 

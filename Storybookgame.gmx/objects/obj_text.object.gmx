@@ -217,6 +217,17 @@ switch global.player1State
         var argList = obj_dialogue.answerList;
         var npcList = obj_controller.objects;
         break;
+    case "combat":
+        var cmdList = obj_controller.commandList;
+        var argList = global.goDest;
+        var npcList = global.localeNPC;
+        break;
+    default:
+        var emptyL = ds_list_create();
+        cmdList = emptyL;
+        argList = emptyL;
+        npcList = emptyL;
+        break;
 }
 ///------------------------------------------------------end list chage
 

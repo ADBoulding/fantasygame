@@ -1,14 +1,17 @@
-{
-	"Gladiator" : {
+[
+	{
+		"name" : "Gladiator",
 		"health" : 5,
 		"attack" : 2
 	},
-	"Ruffian" : {
+	{
+		"name" : "Ruffian",
 		"health" : 2,
 		"attack" : 3
 	},
-	"Bandit" : {
+	{
+		"name" : "Bandit",
 		"health" : 3,
 		"attack" : 3
 	}
-}
+]

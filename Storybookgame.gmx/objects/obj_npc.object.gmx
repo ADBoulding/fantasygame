@@ -173,7 +173,7 @@ ini_close();
           <argument>
             <kind>1</kind>
             <string>///remove stuff and save
-if obj_player.npcProg[? workingName+".prog"] = undefined
+if obj_player.npcProg[? workingName+".prog"] != undefined
 {
    if obj_player.npcProg[? workingName+".prog"] != prog {
         obj_player.npcProg[? workingName+".prog"] = prog;
@@ -181,6 +181,7 @@ if obj_player.npcProg[? workingName+".prog"] = undefined
    if obj_player.npcProg[? workingName+".undisc"] != undisc {
         obj_player.npcProg[? workingName+".undisc"] = undisc;
    }
+   show_message(obj_player.npcProg[? workingName+".disp"]);
    if obj_player.npcProg[? workingName+".disp"] != disp {
         obj_player.npcProg[? workingName+".disp"] = disp;
    }

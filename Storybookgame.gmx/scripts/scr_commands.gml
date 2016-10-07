@@ -60,6 +60,22 @@ if (global.started = true)
                     break;            
             }*/
             break;
+        case "combat":
+            switch command
+            {
+                case "leave":
+                    if instance_exists(obj_enemy)
+                    {
+                        with obj_enemy
+                        {
+                            instance_destroy();
+                        }
+                    }
+                    global.player1State = "normal";
+                    ds_list_delete(obj_controller.commandList, ds_list_find_index(obj_controller.commandList, "leave"));
+                    break;
+            }
+            break;
     }
 } else if (command = "start") and (global.started = false)
 {
