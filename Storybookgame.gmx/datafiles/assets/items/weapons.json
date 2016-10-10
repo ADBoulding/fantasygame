@@ -1,0 +1,26 @@
+{
+	"longsword" : {
+		"type" : "sword",
+		"durability" : 4,
+		"attack" : 10,
+		"disarmChance" : 10
+	},
+	"broadsword" : {
+		"type" : "sword",
+		"durability" : 7,
+		"attack" : 8,
+		"disarmChance" : 8
+	},
+	"daggers" : {
+		"type" : "knife",
+		"durability" : 15,
+		"attack" : 5,
+		"disarmChance" : 2
+	},
+	"brassKnuckles" : {
+		"type" : "knuckles",
+		"durability" : 100,
+		"attack" : 1,
+		"disarmChance" : -1
+	}
+}

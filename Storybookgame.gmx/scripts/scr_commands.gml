@@ -74,15 +74,21 @@ if (global.started = true)
                     global.player1State = "normal";
                     ds_list_delete(obj_controller.commandList, ds_list_find_index(obj_controller.commandList, "leave"));
                     break;
+                case "attack":
+                    break;
             }
             break;
     }
 } else if (command = "start") and (global.started = false)
 {
     obj_console.console = "";
-    ds_list_delete(obj_controller.commandList, (ds_list_find_index(obj_controller.commandList, "start")));
-    scr_lChange("Introburg");
+    scr_lChange("introburg");
 } 
+if (command = "create") && !global.started
+{
+    obj_console.console = "";
+    scr_start("");
+}
 if (command = "exit game")
 {
     scr_exitGame();

@@ -2,16 +2,19 @@
 	{
 		"name" : "Gladiator",
 		"health" : 5,
-		"attack" : 2
+		"attack" : 2,
+		"weapon" : "broadsword"
 	},
 	{
 		"name" : "Ruffian",
 		"health" : 2,
-		"attack" : 3
+		"attack" : 3,
+		"weapon" : "longsword"
 	},
 	{
 		"name" : "Bandit",
 		"health" : 3,
-		"attack" : 3
+		"attack" : 3,
+		"weapon" : "daggers"
 	}
 ]

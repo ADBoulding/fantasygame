@@ -208,19 +208,19 @@ if (cmdTrue) and (string_length(subject) &gt; 1) and (string_pos(" ", subject) &
 switch global.player1State
 {
     case "normal":
-        var cmdList = obj_controller.commandList;
-        var argList = global.goDest;
-        var npcList = global.localeNPC;
+        cmdList = obj_controller.commandList;
+        argList = global.goDest;
+        npcList = global.localeNPC;
         break;
     case "talking":
-        var cmdList = obj_dialogue.answerList;
-        var argList = obj_dialogue.answerList;
-        var npcList = obj_controller.objects;
+        cmdList = obj_dialogue.answerList;
+        argList = obj_dialogue.answerList;
+        npcList = obj_controller.objects;
         break;
     case "combat":
-        var cmdList = obj_controller.commandList;
-        var argList = global.goDest;
-        var npcList = global.localeNPC;
+        cmdList = obj_controller.commandList;
+        argList = global.goDest;
+        npcList = global.localeNPC;
         break;
     default:
         var emptyL = ds_list_create();
@@ -323,12 +323,18 @@ if !keyboard_check(vk_control)
             }
             break;
         case(vk_enter):
+        
             if text != " "
             {
                 command = string_delete(text, 1, 1);
                 text = " ";
                 obj_console.console += command + "#";
-                if (obj_controller.waitForResponse != true)
+                if obj_controller.startState != -1 {
+                    if command != ""
+                    {
+                        scr_start(command);   
+                    }
+                } else if (obj_controller.waitForResponse != true) &amp;&amp; obj_controller.startState = -1
                 {
                     scr_commands(cmdText, argText, npcText);
                 } else {

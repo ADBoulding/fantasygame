@@ -28,7 +28,13 @@
             <string>///Initialize and choose enemy
 eType = "";
 eHealth = -1;
+eBaseAtk = -1;
 eAtk = -1;
+eWeap = "";
+eWeapAtk = -1;
+eWeapDura = -1;
+eWeapType = -1;
+eWeapDis = -1;
 alarm[0] = 1;
 
 
@@ -75,17 +81,76 @@ randomize();
 var eChoose = enemy[| irandom_range(0,ds_list_size(enemy)-1)];
 eType = eChoose[? "name"];
 eHealth = eChoose[? "health"];
-eAtk = eChoose[? "attack"];
+eBaseAtk = eChoose[? "attack"];
+eWeap = eChoose[? "weapon"];
 
 ds_map_destroy(enemyMap);
 
+// weapon time 
+
+
+var jsonWeap = file_text_open_read(working_directory+"assets\items\weapons.json");
+var weaponData = "";
+while (!file_text_eof(jsonWeap))
+{
+    weaponData += file_text_read_string(jsonWeap);
+    file_text_readln(jsonWeap);
+}
+file_text_close(jsonWeap);
+
+show_message(eWeap);
+show_message(weaponData);
+
+
+var weapMap = json_decode(weaponData);
+
+show_message(ds_exists(weapMap, ds_type_map));
+
+var weapon = weapMap[? eWeap];
+eWeapType = weapon[? "type"];
+eWeapAtk = weapon[? "attack"];
+eWeapDura = weapon[? "durability"];
+if (weapon[? "disarmChance"] != undefined)
+{
+    eWeapDis = weapon[? "disarmChance"];
+}
+
+ds_map_destroy(weapMap);
+
 show_message(eType);
 show_message(eHealth);
-show_message(eAtk);
-
-
-
-
+show_message(eBaseAtk);
+show_message(eWeap);
+show_message(eWeapType);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Checks if the enemy has no health
+if eHealth &lt;= 0
+{
+    global.player1State = "normal";
+    obj_console.console += "You defeated the " + eType + "#";
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>

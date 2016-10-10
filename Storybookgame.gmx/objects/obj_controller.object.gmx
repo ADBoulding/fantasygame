@@ -28,6 +28,7 @@
             <string>///Initialize everything
 window_set_fullscreen(false);
 global.started = false;
+startState = -1;
 
 
 /// location junk
