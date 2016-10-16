@@ -33,7 +33,9 @@ npcProg = ds_map_create();
 
 name = "";
 race = "Human";
+gender = "Triggered";
 perception = 1;
+weapon = "";
 
 </string>
           </argument>

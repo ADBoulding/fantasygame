@@ -61,9 +61,12 @@ talkList = ds_list_create();
 responseList = ds_list_create();
 subjects = ds_list_create();
 
-ds_list_add(commandList, "look around","exit game","exists","start","clear","debug","browse","fight");
+///Adds stuff to the data structural lists
+ds_list_add(commandList, "create","music","look around","exit game","exists","start","clear","debug","browse","fight");
 ds_list_add(responseList, "yes", "no", "leave");
 ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give","debug");
+
+audio_play_sound(snd_legacy,1,true);
 
 </string>
           </argument>

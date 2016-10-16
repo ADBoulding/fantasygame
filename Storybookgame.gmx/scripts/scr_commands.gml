@@ -79,6 +79,8 @@ if (global.started = true)
             }
             break;
     }
+///---------- DEBUG STUFF ----------///
+
 } else if (command = "start") and (global.started = false)
 {
     obj_console.console = "";
@@ -92,6 +94,15 @@ if (command = "create") && !global.started
 if (command = "exit game")
 {
     scr_exitGame();
+}
+if (command = "music")
+{
+    if audio_is_playing(snd_legacy)
+    {
+        audio_stop_all();
+    } else if !audio_is_playing(snd_legacy) {
+        audio_play_sound(snd_legacy,1,true);
+    }
 }
 if (command = "clear")
 {
