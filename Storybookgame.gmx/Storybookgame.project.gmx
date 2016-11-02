@@ -163,6 +163,7 @@
   <sounds name="sound">
     <sound>sound\snd_background</sound>
     <sound>sound\snd_legacy</sound>
+    <sound>sound\snd_sadStart</sound>
   </sounds>
   <sprites name="sprites"/>
   <backgrounds name="background"/>

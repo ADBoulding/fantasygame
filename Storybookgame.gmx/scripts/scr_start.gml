@@ -844,6 +844,7 @@ Choose a race to read more about them.#";
                 {
                     obj_console.console = "";
                     ds_list_destroy(global.start);
+                    obj_controller.startState = -1;
                     scr_lChange("introburg");
                     exit;
                 } else if string_pos("false", string_lower(input)) != 0
@@ -899,6 +900,8 @@ if testDone
         {
             obj_console.console = "";
             ds_list_destroy(global.start);
+            global.started = true;
+            obj_controller.startState = -1;
             scr_lChange("introburg");
             exit;
         } else if string_pos("false", string_lower(input)) != 0

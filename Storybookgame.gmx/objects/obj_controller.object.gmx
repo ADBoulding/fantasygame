@@ -66,7 +66,7 @@ ds_list_add(commandList, "create","music","look around","exit game","exists","st
 ds_list_add(responseList, "yes", "no", "leave");
 ds_list_add(talkList, "ask","talk about","leave","goodbye","clear","give","debug");
 
-audio_play_sound(snd_legacy,1,true);
+audio_play_sound(snd_sadStart,1,true);
 
 </string>
           </argument>

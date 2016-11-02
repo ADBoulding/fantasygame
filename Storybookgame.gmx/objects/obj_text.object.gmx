@@ -329,7 +329,7 @@ if !keyboard_check(vk_control)
                 command = string_delete(text, 1, 1);
                 text = " ";
                 obj_console.console += command + "#";
-                if obj_controller.startState != -1 {
+                if obj_controller.startState &gt; -1 {
                     if command != ""
                     {
                         scr_start(command);   

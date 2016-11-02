@@ -81,7 +81,7 @@ if (global.started = true)
     }
 ///---------- DEBUG STUFF ----------///
 
-} else if (command = "start") and (global.started = false)
+} else if (command = "start") && !global.started
 {
     obj_console.console = "";
     scr_lChange("introburg");
@@ -97,11 +97,11 @@ if (command = "exit game")
 }
 if (command = "music")
 {
-    if audio_is_playing(snd_legacy)
+    if audio_is_playing(snd_sadStart)
     {
         audio_stop_all();
-    } else if !audio_is_playing(snd_legacy) {
-        audio_play_sound(snd_legacy,1,true);
+    } else if !audio_is_playing(snd_sadStart) {
+        audio_play_sound(snd_sadStart,1,true);
     }
 }
 if (command = "clear")
