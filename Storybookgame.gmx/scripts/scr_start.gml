@@ -319,7 +319,7 @@ while startBuffer = 1
             {
                 if string_pos("the",string_lower(input)) != 0
                 {
-                    input = string_delete(input,0,4);
+                    input = string_delete(input,1,4);
                 }
                 input = string_lower(input);
                 var nDefault = true;
@@ -395,7 +395,6 @@ Choose a race to read more about them.#";
             {
                 if string_pos("true", string_lower(input)) != 0
                 {
-                    show_message("fired");
                     obj_player.race = "Ignumbrie";
                     input = "";
                     obj_controller.startState = 23;
